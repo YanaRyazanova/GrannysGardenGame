@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrannysGardenGame", "GrannysGardenGame\GrannysGardenGame.csproj", "{8F596ABA-0014-4A33-9F91-AD76BF37D026}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests\Tests.csproj", "{C71AB224-ABAC-4B25-B585-CBD27FA44CE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{B6ABDB6A-56ED-4777-B654-F9994CD83D9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{8F596ABA-0014-4A33-9F91-AD76BF37D026}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F596ABA-0014-4A33-9F91-AD76BF37D026}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F596ABA-0014-4A33-9F91-AD76BF37D026}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C71AB224-ABAC-4B25-B585-CBD27FA44CE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C71AB224-ABAC-4B25-B585-CBD27FA44CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C71AB224-ABAC-4B25-B585-CBD27FA44CE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C71AB224-ABAC-4B25-B585-CBD27FA44CE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6ABDB6A-56ED-4777-B654-F9994CD83D9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6ABDB6A-56ED-4777-B654-F9994CD83D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6ABDB6A-56ED-4777-B654-F9994CD83D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6ABDB6A-56ED-4777-B654-F9994CD83D9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

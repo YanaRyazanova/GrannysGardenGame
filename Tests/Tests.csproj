@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C71AB224-ABAC-4B25-B585-CBD27FA44CE5}</ProjectGuid>
+    <ProjectGuid>{B6ABDB6A-56ED-4777-B654-F9994CD83D9E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tests</RootNamespace>
@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.3.11.0\lib\netstandard2.0\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.3.11.0\lib\netstandard2.0\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -46,10 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\CreatureCommand.cs" />
     <Compile Include="Domain\Field.cs" />
+    <Compile Include="Domain\FieldCell.cs" />
     <Compile Include="Domain\Game.cs" />
+    <Compile Include="Domain\ICreature.cs" />
     <Compile Include="Domain\Player.cs" />
     <Compile Include="Domain\ShotResult.cs" />
+    <Compile Include="Domain\Weed.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

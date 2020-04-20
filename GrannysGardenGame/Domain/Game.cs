@@ -7,8 +7,12 @@ using System.Windows.Forms;
 
 namespace GrannysGardenGame.Domain
 {
-    public class Game1
+    public class Game
     {
-        public Keys KeyPressed;
+        public static Keys KeyPressed;
+        private Player player;
+        private Field field;
+        public int Level { get; set; }
+
     }
 }

@@ -14,6 +14,7 @@ namespace GrannysGardenGame
         [STAThread]
         static void Main()
         {
+            Console.WriteLine("Misha is here");
         }
     }
 }

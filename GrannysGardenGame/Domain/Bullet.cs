@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace GrannysGardenGame.Domain
 {
-    class Bullet
+    public enum BulletState
     {
-        public int X;
-        public int Y;
+        NotExist,
+        Exist
+    }
+    public class Bullet
+    {
+        private int X;
+        private int Y;
 
+        private BulletState state;
         public Bullet(int x, int y)
         {
             X = x;
             Y = y;
+            state = BulletState.Exist;
         }
 
         public void MoveBullet()
@@ -22,17 +29,20 @@ namespace GrannysGardenGame.Domain
             this.Y++;
         }
 
-        public Bullet CreateBullet(int x, int y)
-        {
-            var bullet = new Bullet(x, y + 1);
-            return bullet;
-        }
-
-        public bool BulletOutOfBorder(Field field)
+        public bool DeadInConflict(Field field, FieldCell position, Player player)
         {
             if (this.Y == field.Height)
+            {
+                this.state = BulletState.NotExist;
                 return true;
+            }
+            if (this.X == player.CurrentPos.X && this.Y == player.CurrentPos.Y)
+            {
+                this.state = BulletState.NotExist;
+                return true;
+            }
             return false;
         }
+
     }
 }

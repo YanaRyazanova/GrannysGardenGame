@@ -59,7 +59,6 @@
     <Compile Include="Domain\Player.cs" />
     <Compile Include="Domain\ShotResult.cs" />
     <Compile Include="Domain\Weed.cs" />
-    <Compile Include="Domain\WeedState.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

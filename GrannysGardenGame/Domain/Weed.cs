@@ -7,6 +7,12 @@ using System.Windows.Forms;
 
 namespace GrannysGardenGame.Domain
 {
+    public enum WeedState
+    {
+        Dead,
+        Freezed,
+        Alive
+    }
     public class Weed
     {
         private int X;
@@ -16,6 +22,18 @@ namespace GrannysGardenGame.Domain
         {
             X = x;
             Y = y;
+            State = WeedState.Alive;
         }
+
+        public Bullet Shoot()
+        {
+            var bullet = new Bullet(this.X, this.Y + 1);
+            return bullet;
+        }
+        
+        //public static IEnumerable<LinkedList<FieldCell>> BossSearch(Field field, FieldCell start, FieldCell playerPosition)
+        //{
+        //Для перемещений БигБосса поиск в ширину?
+        //}
     }
 }

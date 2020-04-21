@@ -9,9 +9,9 @@ namespace GrannysGardenGame.Domain
 {
     public enum WeedState
     {
-        Dead = 0,
-        Freezed = 1,
-        Alive = 2
+        Dead,
+        Freezed,
+        Alive
     }
     public class Weed
     {

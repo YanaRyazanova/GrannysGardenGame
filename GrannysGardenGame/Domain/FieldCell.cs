@@ -9,7 +9,9 @@ namespace GrannysGardenGame.Domain
     public enum  FieldCellState
     {
         Empty,
-        Weed
+        Weed,
+        Player, 
+        Bullet
     }
 
     public class FieldCell

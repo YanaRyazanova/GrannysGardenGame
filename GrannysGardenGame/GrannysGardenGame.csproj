@@ -50,6 +50,7 @@
     <Compile Include="Domain\CreatureCommand.cs" />
     <Compile Include="Domain\Field.cs" />
     <Compile Include="Domain\FieldCell.cs" />
+    <Compile Include="Domain\FieldStates.cs" />
     <Compile Include="Domain\Game.cs" />
     <Compile Include="Domain\GameForm.cs">
       <SubType>Form</SubType>

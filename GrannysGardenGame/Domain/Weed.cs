@@ -17,6 +17,5 @@ namespace GrannysGardenGame.Domain
             X = x;
             Y = y;
         }
-
     }
 }

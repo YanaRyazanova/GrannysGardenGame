@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace GrannysGardenGame.Domain
 {
-    public enum  FieldCell
+    public enum  FieldCellState
     {
         Empty,
         Weed
+    }
+
+    public class FieldCell
+    {
+        public int X;
+        public int Y;
+        public FieldCellState State;
     }
 }

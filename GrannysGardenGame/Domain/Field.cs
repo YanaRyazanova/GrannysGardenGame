@@ -8,15 +8,15 @@ namespace GrannysGardenGame.Domain
 {
     public class Field
     {
-        public FieldCellStates[,] Field;
+        public FieldCellStates[,] field;
         private HashSet<Weed> weeds = new HashSet<Weed>();
         public FieldCell fieldCell; //Клетка, до которой нужно дойти, чтобы выйграть
-        public int Width => Field.Length[0];
+        public int Width => field.GetLength(0);
+        public int Height => field.GetLength(1);
 
-        public int Height { get; }
-        public Field(FieldCellStates[,] field, HashSet<Weed> weedsForField)
+        public Field(FieldCellStates[,] fieldInit, HashSet<Weed> weedsForField)
         {
-            Field = field;
+            field = fieldInit;
             weeds = weedsForField;
         }
 
@@ -30,8 +30,7 @@ namespace GrannysGardenGame.Domain
             var len1 = lines[0].Length;
             var len2 = lines.Length;
             var field = new FieldCellStates[len1, len2];
-            var weeds = new List<FieldCell>();
-            FieldCell winCell;
+            var weeds = new HashSet<Weed>();
             FieldCell initialCell;
             for (var y = 0; y < len2; y++)
                 for (var x = 0; x < len1; x++)
@@ -40,14 +39,13 @@ namespace GrannysGardenGame.Domain
                     {
                         case 'W':
                             field[x, y] = FieldCellStates.Weed;
-                            weeds.Add(new FieldCell(x, y, FieldCellStates.Weed));
+                            weeds.Add(new Weed(x, y));
                             break;
                         case '#':
                             field[x, y] = FieldCellStates.Empty;
                             break;
                         case '@':
                             field[x, y] = FieldCellStates.WinCell;
-                            winCell = new FieldCell(x, y, FieldCellStates.WinCell);
                             break;
                         case 'P':
                             field[x, y] = FieldCellStates.Player;
@@ -58,7 +56,7 @@ namespace GrannysGardenGame.Domain
                             break;
                     }
                 }
-            return new Field()
+            return new Field(field, weeds);
         }
     }
 }

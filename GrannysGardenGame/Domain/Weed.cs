@@ -17,12 +17,14 @@ namespace GrannysGardenGame.Domain
     {
         private int X;
         private int Y;
-        public WeedState State;
+        public WeedState WeedState;
+        public FieldCellStates FieldState;
         public Weed(int x, int y)
         {
             X = x;
             Y = y;
-            State = WeedState.Alive;
+            WeedState = WeedState.Alive;
+            FieldState = FieldCellStates.Weed;
         }
 
         public Bullet Shoot()

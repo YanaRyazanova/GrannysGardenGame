@@ -58,5 +58,10 @@ namespace GrannysGardenGame.Domain
                 }
             return new Field(field, weeds);
         }
+
+        public bool InBounds(FieldCell cell)
+        {
+            return cell.X >= 0 && cell.X < this.Width && cell.Y >= 0 && cell.Y < this.Height;
+        }
     }
 }

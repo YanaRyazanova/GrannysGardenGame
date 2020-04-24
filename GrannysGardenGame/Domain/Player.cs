@@ -54,12 +54,12 @@ namespace GrannysGardenGame.Domain
         public void DigUpWeed(Weed weed)
         {
             if (Game.field.IsCellContainWeed(weed))
-                weed.State = WeedState.Dead;
+                weed.WeedState = WeedState.Dead;
         }
         public void FreezeWeed(Weed weed)
         {
             if (Game.field.IsCellContainWeed(weed))
-                weed.State = WeedState.Freezed;
+                weed.WeedState = WeedState.Freezed;
         }
     }
 }

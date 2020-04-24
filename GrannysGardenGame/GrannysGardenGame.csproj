@@ -50,8 +50,13 @@
     <Compile Include="Domain\CreatureCommand.cs" />
     <Compile Include="Domain\Field.cs" />
     <Compile Include="Domain\FieldCell.cs" />
+    <Compile Include="Domain\FieldStates.cs" />
     <Compile Include="Domain\Game.cs" />
+    <Compile Include="Domain\GameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Domain\ICreature.cs" />
+    <Compile Include="Domain\LevelConstructor.cs" />
     <Compile Include="Domain\Player.cs" />
     <Compile Include="Domain\ShotResult.cs" />
     <Compile Include="Domain\Weed.cs" />
@@ -85,9 +90,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Levels\Level2.txt" />
+    <Content Include="Levels\Level1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

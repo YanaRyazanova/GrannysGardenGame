@@ -18,7 +18,7 @@ namespace GrannysGardenGame.Domain
         public static Keys KeyPressed;
         private Player player;
         public static Field field;
-        public FieldCell fieldCell; //Клетка, до которой нужно дойти, чтобы выйграть
+        
         private GameStates GameState;
         public int Level { get; set; }
         public static int GetWigth => field.Width;
@@ -31,6 +31,5 @@ namespace GrannysGardenGame.Domain
             if (player.Health < 0)
                 GameState = GameStates.Lose;
         }
-
     }
 }

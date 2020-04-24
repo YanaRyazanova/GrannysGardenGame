@@ -20,6 +20,14 @@ namespace GrannysGardenGame.Domain
         public static Field field;
         
         private GameStates GameState;
+
+        public Game(Keys keys, Player playerConst, Field fieldConst)
+        {
+            KeyPressed = keys;
+            player = playerConst;
+            field = fieldConst;
+            GameState = GameStates.Active;
+        }
         public int Level { get; set; }
         public static int GetWigth => field.Width;
         public static int GetHeight => field.Height;

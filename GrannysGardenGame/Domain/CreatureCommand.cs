@@ -10,5 +10,11 @@ namespace GrannysGardenGame.Domain
     {
         public int X;
         public int Y;
+
+        public CreatureCommand(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,30 @@ namespace GrannysGardenGame.Domain
         public int Scores { get; }
 
         public FieldCell CurrentPos;
+
+        public Player(FieldCell initCell)
+        {
+            CurrentPos = initCell;
+        }
+        private static readonly Dictionary<MoveDirection, Size> directionToOffset = new Dictionary<MoveDirection, Size>
+        {
+            {MoveDirection.Up, new Size(0, -1)},
+            {MoveDirection.Down, new Size(0, 1)},
+            {MoveDirection.Left, new Size(-1, 0)},
+            {MoveDirection.Right, new Size(1, 0)}
+        };
+
+        private static readonly Dictionary<Size, MoveDirection> offsetToDirection = new Dictionary<Size, MoveDirection>
+        {
+            {new Size(0, -1), MoveDirection.Up},
+            {new Size(0, 1), MoveDirection.Down},
+            {new Size(-1, 0), MoveDirection.Left},
+            {new Size(1, 0), MoveDirection.Right}
+        };
         public CreatureCommand Act(int x, int y) 
         {
             var key = Game.KeyPressed;
-            var position = new CreatureCommand();
+            var position = new CreatureCommand(0, 0);
 
             if (key == Keys.Right)
             {
@@ -48,7 +69,7 @@ namespace GrannysGardenGame.Domain
             {
                 return position;
             }
-            return new CreatureCommand { X = 0, Y = 0 };
+            return new CreatureCommand(0, 0);
         }
         
         public void DigUpWeed(Weed weed)

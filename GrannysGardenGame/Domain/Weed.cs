@@ -25,7 +25,6 @@ namespace GrannysGardenGame.Domain
             X = x;
             Y = y;
             WeedState = WeedState.Alive;
-            FieldState = FieldCellStates.Weed;
         }
 
         public Bullet Shoot()

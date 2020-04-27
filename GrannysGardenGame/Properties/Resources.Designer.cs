@@ -67,5 +67,30 @@ namespace GrannysGardenGame.Properties
                 resourceCulture = value;
             }
         }
+
+        internal static System.Drawing.Bitmap Grass
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("Grass", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        //<summary>
+        //##@###
+        //W##W##
+        //#W####
+        //#####W
+        //#W##W#
+        //#####P
+        //</summary>
+        internal static string Level1
+        {
+            get
+            {
+                return ResourceManager.GetString("Level1", resourceCulture);
+            }
+        }
     }
 }

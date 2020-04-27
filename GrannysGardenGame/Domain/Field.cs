@@ -31,6 +31,12 @@ namespace GrannysGardenGame.Domain
            return weeds.Contains(cell);
         }
 
+        public static Field FromText(string text)
+        {
+            var lines = text.Split(new[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            return FromLines(lines);
+        }
+
         public static Field FromLines(string[] lines)
         {
             var len1 = lines[0].Length;

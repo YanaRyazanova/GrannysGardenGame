@@ -19,6 +19,7 @@ namespace GrannysGardenGame.Domain
         private int Y;
         public WeedState WeedState;
         public FieldCellStates FieldState;
+
         public Weed(int x, int y)
         {
             X = x;

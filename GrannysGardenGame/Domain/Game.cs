@@ -32,6 +32,11 @@ namespace GrannysGardenGame.Domain
         public static int GetWigth => field.Width;
         public static int GetHeight => field.Height;
 
+        public void CreateField()
+        {
+
+        }
+
         public void GameEnd(Player player, FieldCell specialCell)
         {
             if(player.CurrentPos.Equals(specialCell)) //Возможно потребуется переопределить метод

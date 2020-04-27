@@ -12,6 +12,20 @@ namespace Tests
     [TestFixture]
     public class TestCheck
     {
+        //[Test]
+        //public void FieldDecryption()
+        //{
+        //    var field = new[]
+        //   {
+        //        "W###",
+        //        "####",
+        //        "P###"
+        //    };
+        //    var actual = Field.FromLines(field);
+        //    var exept = new FieldCell(0, 0, FieldCellStates.Weed);
+        //    Assert.AreEqual(actual., exept.X);
+        //    Assert.AreEqual(actual.Y, exept.Y);
+        //}
 
         [Test]
         public void PlayerMovement()
@@ -29,7 +43,7 @@ namespace Tests
             keys.Add(Keys.Right);
             var game = new Game(keys[0], player, field);
             var actual = player.Act(init.X, init.Y);
-            var exept = new CreatureCommand(1, 0);
+            var exept = new FieldCell(1, 0, FieldCellStates.Player);
             Assert.AreEqual(actual.X, exept.X);
             Assert.AreEqual(actual.Y, exept.Y);
         }

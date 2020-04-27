@@ -39,37 +39,37 @@ namespace GrannysGardenGame.Domain
             {new Size(-1, 0), MoveDirection.Left},
             {new Size(1, 0), MoveDirection.Right}
         };
-        public CreatureCommand Act(int x, int y) 
+        public FieldCell Act(int x, int y) 
         {
             var key = Game.KeyPressed;
-            var position = new CreatureCommand(0, 0);
+            var position = new FieldCell(0, 0, FieldCellStates.Empty);
 
-            if (key == Keys.Right)
+            switch (key)
             {
-                position.X += 1;
-            }
-            else if (key == Keys.Left)
-            {
-                position.X -= 1;
-            }
-            else if (key == Keys.Up)
-            {
-                position.Y -= 1;
-            }
-            else if (key == Keys.Down)
-            {
-                position.Y += 1;
-            }
-
+                case Keys.Right:
+                    position.X += 1;
+                    break;
+                case Keys.Left:
+                    position.X -= 1;
+                    break;
+                case Keys.Up:
+                    position.Y -= 1;
+                    break;
+                case Keys.Down:
+                    position.Y += 1;
+                    break;
+            };
+                
             var newX = x + position.X;
             var newY = y + position.Y;
             if (newX >= 0 && newX < Game.GetWigth
                 && newY >= 0 && newY < Game.GetHeight
                 && !Game.field.IsCellContainWeed(new Weed(newX, newY)))
             {
+                position.State = FieldCellStates.Player;
                 return position;
             }
-            return new CreatureCommand(0, 0);
+            return new FieldCell(0, 0, FieldCellStates.Empty);
         }
         
         public void DigUpWeed(Weed weed)

@@ -47,5 +47,56 @@ namespace Tests
             Assert.AreEqual(actual.X, exept.X);
             Assert.AreEqual(actual.Y, exept.Y);
         }
+
+        [Test]
+        public void MoveBulletTest()
+        {
+            var bullet = new Bullet(1, 2);
+            bullet.MoveBullet();
+            Assert.AreEqual(3, bullet.Y);
+            bullet.MoveBullet();
+            bullet.MoveBullet();
+            Assert.AreEqual(5, bullet.Y);
+        }
+
+        [Test]
+        public void BulletFliesOutOfTheFieldTest()
+        {
+            var textField = new[]
+            {
+            "W@##",
+            "####",
+            "###P",
+            "####"
+            };
+            var field = Field.FromLines(textField);
+            var player = new Player(field.GetCurrentPosition(FieldCellStates.Player));
+            var weed = new Weed(field.GetCurrentPosition(FieldCellStates.Weed).X, field.GetCurrentPosition(FieldCellStates.Weed).Y);
+            var bullet = weed.Shoot();
+            bullet.MoveBullet();
+            bullet.MoveBullet();
+            Assert.AreEqual(false, bullet.DeadInConflict(field, player));
+            bullet.MoveBullet();
+            Assert.AreEqual(true, bullet.DeadInConflict(field, player));
+        }
+
+        [Test]
+        public void BulletKillsPlayerTest()
+        {
+            var textField = new[]
+            {
+            "#@#W",
+            "####",
+            "###P",
+            "####"
+            };
+            var field = Field.FromLines(textField);
+            var player = new Player(field.GetCurrentPosition(FieldCellStates.Player));
+            var weed = new Weed(field.GetCurrentPosition(FieldCellStates.Weed).X, field.GetCurrentPosition(FieldCellStates.Weed).Y);
+            var bullet = weed.Shoot();
+            Assert.AreEqual(false, bullet.DeadInConflict(field, player));
+            bullet.MoveBullet();
+            Assert.AreEqual(true, bullet.DeadInConflict(field, player));
+        }
     }
 }

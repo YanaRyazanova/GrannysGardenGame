@@ -13,8 +13,8 @@ namespace GrannysGardenGame.Domain
     }
     public class Bullet
     {
-        private int X;
-        private int Y;
+        public int X;
+        public int Y;
 
         private BulletState state;
         public Bullet(int x, int y)

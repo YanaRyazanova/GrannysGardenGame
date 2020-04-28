@@ -31,6 +31,14 @@ namespace GrannysGardenGame.Domain
            return weeds.Contains(cell);
         }
 
+        //public FieldCellStates GetCurrentPosition(FieldCellStates state)
+        //{
+        //    for (var i = 0; i < this.Width; i++)
+        //        for (int j = 0; j < this.Height; j++)
+        //            if (field[i, j] == state)
+        //                return field[i, j];
+        //}
+
         public static Field FromText(string text)
         {
             var lines = text.Split(new[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);

@@ -19,7 +19,7 @@ namespace GrannysGardenGame.Domain
         private Player player;
         public static Field field;
         
-        private GameStates GameState;
+        public GameStates GameState;
 
         public Game(Keys keys, Player playerConst, Field fieldConst)
         {
@@ -39,7 +39,7 @@ namespace GrannysGardenGame.Domain
 
         public void GameEnd(Player player, FieldCell specialCell)
         {
-            if(player.CurrentPos.Equals(specialCell)) //Возможно потребуется переопределить метод
+            if(player.CurrentPos.X == specialCell.X && player.CurrentPos.Y == specialCell.Y) //Возможно потребуется переопределить метод
                 GameState = GameStates.Win;
             if (player.Health < 0)
                 GameState = GameStates.Lose;

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace GrannysGardenGame.Domain
 {
-    public enum WeedState
+    public enum WeedStates
     {
         Dead,
         Freezed,
@@ -15,16 +15,17 @@ namespace GrannysGardenGame.Domain
     }
     public class Weed
     {
-        private int X;
-        private int Y;
-        public WeedState WeedState;
+        public int X;
+        public int Y;
+        public WeedStates WeedState;
         public FieldCellStates FieldState;
 
         public Weed(int x, int y)
         {
             X = x;
             Y = y;
-            WeedState = WeedState.Alive;
+            WeedState = WeedStates.Alive;
+            FieldState = FieldCellStates.Weed;
         }
 
         public Bullet Shoot()
@@ -60,7 +61,6 @@ namespace GrannysGardenGame.Domain
                     }
                 }
             }
-
             return correctWay;
         }
 
@@ -75,7 +75,6 @@ namespace GrannysGardenGame.Domain
                     incidentPoints.Add(new FieldCell(cell.X + dx, cell.Y + dy, FieldCellStates.Empty));
                 }
             }
-
             return incidentPoints;
         }
     }

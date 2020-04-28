@@ -10,15 +10,15 @@ namespace GrannysGardenGame.Domain
     {
         public FieldCellStates[,] field;
 
-        private HashSet<Weed> weeds = new HashSet<Weed>();
+        public List<Weed> weeds = new List<Weed>();
 
-        public static FieldCell winCell; //Клетка, до которой нужно дойти, чтобы выйграть
+        public FieldCell winCell; //Клетка, до которой нужно дойти, чтобы выйграть
 
         public FieldCell initialCell;
         public int Width => field.GetLength(0);
         public int Height => field.GetLength(1);
 
-        public Field(FieldCellStates[,] fieldInit, HashSet<Weed> weedsForField, FieldCell initCell, FieldCell winnerCell)
+        public Field(FieldCellStates[,] fieldInit, List<Weed> weedsForField, FieldCell initCell, FieldCell winnerCell)
         {
             field = fieldInit;
             weeds = weedsForField;
@@ -31,13 +31,11 @@ namespace GrannysGardenGame.Domain
            return weeds.Contains(cell);
         }
 
-        //public FieldCellStates GetCurrentPosition(FieldCellStates state)
-        //{
-        //    for (var i = 0; i < this.Width; i++)
-        //        for (int j = 0; j < this.Height; j++)
-        //            if (field[i, j] == state)
-        //                return field[i, j];
-        //}
+        public bool IsCellContainBullet(Bullet bullet)
+        {
+            return field[bullet.X, bullet.Y] == FieldCellStates.Bullet;
+        }
+
 
         public static Field FromText(string text)
         {
@@ -50,7 +48,7 @@ namespace GrannysGardenGame.Domain
             var len1 = lines[0].Length;
             var len2 = lines.Length;
             var field = new FieldCellStates[len1, len2];
-            var weeds = new HashSet<Weed>();
+            var weeds = new List<Weed>();
             var initialCell = new FieldCell(0, 0, FieldCellStates.Empty);
             var winCell = new FieldCell(0, 0, FieldCellStates.Empty);
             for (var y = 0; y < len2; y++)
@@ -71,11 +69,11 @@ namespace GrannysGardenGame.Domain
                             break;
                         case 'P':
                             field[x, y] = FieldCellStates.Player;
-                            initialCell = new FieldCell(x, y, FieldCellStates.Empty);
+                            initialCell = new FieldCell(x, y, FieldCellStates.Player);
                             break;
-                        //default:
-                         //   field[x, y] = FieldCellStates.Player;
-                           // break;
+                        default:
+                            field[x, y] = FieldCellStates.Empty;
+                            break;
                     }
                 }
             return new Field(field, weeds, initialCell, winCell);

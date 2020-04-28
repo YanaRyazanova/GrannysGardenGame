@@ -29,7 +29,7 @@ namespace GrannysGardenGame.Domain
             this.Y++;
         }
 
-        public bool DeadInConflict(Field field, FieldCell position, Player player)
+        public bool DeadInConflict(Field field, Player player)
         {
             if (this.Y == field.Height)
             {

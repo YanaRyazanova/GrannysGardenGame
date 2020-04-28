@@ -24,22 +24,8 @@ namespace GrannysGardenGame.Domain
         {
             CurrentPos = initCell;
         }
-        private static readonly Dictionary<MoveDirection, Size> directionToOffset = new Dictionary<MoveDirection, Size>
-        {
-            {MoveDirection.Up, new Size(0, -1)},
-            {MoveDirection.Down, new Size(0, 1)},
-            {MoveDirection.Left, new Size(-1, 0)},
-            {MoveDirection.Right, new Size(1, 0)}
-        };
-
-        private static readonly Dictionary<Size, MoveDirection> offsetToDirection = new Dictionary<Size, MoveDirection>
-        {
-            {new Size(0, -1), MoveDirection.Up},
-            {new Size(0, 1), MoveDirection.Down},
-            {new Size(-1, 0), MoveDirection.Left},
-            {new Size(1, 0), MoveDirection.Right}
-        };
-        public FieldCell Act(int x, int y) 
+        
+        public void Act(int x, int y) 
         {
             var key = Game.KeyPressed;
             var position = new FieldCell(0, 0, FieldCellStates.Empty);
@@ -64,23 +50,29 @@ namespace GrannysGardenGame.Domain
             var newY = y + position.Y;
             if (newX >= 0 && newX < Game.GetWigth
                 && newY >= 0 && newY < Game.GetHeight
-                && !Game.field.IsCellContainWeed(new Weed(newX, newY)))
+                && !Game.field.IsCellContainWeed(new Weed(newX, newY))
+                && !Game.field.IsCellContainBullet(new Bullet(x, y)))
             {
                 position.State = FieldCellStates.Player;
-                return position;
+                CurrentPos = position;
             }
-            return new FieldCell(0, 0, FieldCellStates.Empty);
+            else
+                CurrentPos =  new FieldCell(0, 0, FieldCellStates.Empty);
         }
         
-        public void DigUpWeed(Weed weed)
+        public void DigUpWeed(Weed curWeed)
         {
-            if (Game.field.IsCellContainWeed(weed))
-                weed.WeedState = WeedState.Dead;
+            if (Game.field.IsCellContainWeed(curWeed) 
+                && (CurrentPos.X + 1 == curWeed.X || CurrentPos.X - 1 == curWeed.X
+                || CurrentPos.Y + 1 == curWeed.Y || CurrentPos.X - 1 == curWeed.Y))
+                curWeed.WeedState = WeedStates.Dead;
         }
-        public void FreezeWeed(Weed weed)
+        public void FreezeWeed(Weed curWeed)
         {
-            if (Game.field.IsCellContainWeed(weed))
-                weed.WeedState = WeedState.Freezed;
+            if (Game.field.IsCellContainWeed(curWeed)
+                && (CurrentPos.X + 1 == curWeed.X || CurrentPos.X - 1 == curWeed.X
+                || CurrentPos.Y + 1 == curWeed.Y || CurrentPos.X - 1 == curWeed.Y))
+                curWeed.WeedState = WeedStates.Freezed;
         }
     }
 }

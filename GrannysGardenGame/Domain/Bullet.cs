@@ -39,6 +39,7 @@ namespace GrannysGardenGame.Domain
             if (this.X == player.CurrentPos.X && this.Y == player.CurrentPos.Y)
             {
                 this.state = BulletState.NotExist;
+                player.Health -= 4;
                 return true;
             }
             return false;

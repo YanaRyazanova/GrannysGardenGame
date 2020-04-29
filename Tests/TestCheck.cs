@@ -61,9 +61,9 @@ namespace Tests
             var game = new Game(keys[0], player, field);
             player.Act(init.X, init.Y);
             var actual = player.CurrentPos;
-            var exept = new FieldCell(1, 0, FieldCellStates.Player);
-            Assert.AreEqual(actual.X, exept.X);
-            Assert.AreEqual(actual.Y, exept.Y);
+            var exept = new FieldCell(1, 2, FieldCellStates.Player);
+            Assert.AreEqual(exept.X, actual.X);
+            Assert.AreEqual(exept.Y, actual.Y);
         }
 
         [Test]
@@ -115,6 +115,7 @@ namespace Tests
             player.Act(init.X, init.Y);
             player.DigUpWeed(weed);
             Assert.AreEqual(weed.WeedState, WeedStates.Dead);
+            Assert.AreEqual(4, player.Scores);
         }
 
         [Test]
@@ -175,7 +176,8 @@ namespace Tests
             var bullet = weed.Shoot();
             Assert.AreEqual(false, bullet.DeadInConflict(field, player));
             bullet.MoveBullet();
-            Assert.AreEqual(true, bullet.DeadInConflict(field, player));
+            Assert.AreEqual(true, bullet.DeadInConflict(field, player)); 
+            Assert.AreEqual(16, player.Health);
         }
 
         [Test]
@@ -189,10 +191,10 @@ namespace Tests
             Assert.AreEqual(bullet.Y, 4);
         }
         [Test]
-        public void GameChangeStateTest()
+        public void GameChangeStateWinTest()
         {
             var textField = new[]
-           {
+            {
                 "P@#",
                 "###",
                 "###"
@@ -208,41 +210,65 @@ namespace Tests
             Assert.AreEqual(game.GameState, GameStates.Win);
         }
 
-        //[Test]
-        //public void BossSearchTest()
-        //{
-        //    var textField = new[]
-        //    {
-        //    "W@##",
-        //    "####",
-        //    "###P",
-        //    "####"
-        //    };
-        //    var field = Field.FromLines(textField);
-        //    var expectedPathLength = 5;
-        //    var realPathLength = Weed.BossSearch(
-        //        field, 
-        //        GetCurrentPosition(FieldCellStates.Weed, field),
-        //        GetCurrentPosition(FieldCellStates.Player, field)).Length;
-        //    Assert.AreEqual(expectedPathLength, realPathLength);
-        //}
+        [Test]
+        public void IsGameChangeStateLoseTest()
+        {
+            var textField = new[]
+            {
+                "#W#",
+                "P##",
+                "###"
+            };
+            var field = Field.FromLines(textField);
+            var init = field.initialCell;
+            var player = new Player(init);
+            player.Health -= 16;
+            var keys = new List<Keys>();
+            keys.Add(Keys.Right);
+            var game = new Game(keys[0], player, field);
+            player.Act(init.X, init.Y);
+            var weed = field.weeds[0];
+            var bullet = weed.Shoot();
+            bullet.DeadInConflict(field, player);
+            game.GameEnd(player, field.winCell);
+            Assert.AreEqual(GameStates.Lose, game.GameState);
+        }
 
-        //[Test]
-        //public void SmallBossSearchTest()
-        //{
-        //    var textField = new[]
-        //    {
-        //    "W#",
-        //    "#P"
-        //    };
-        //    var field = Field.FromLines(textField);
-        //    var expectedPathLength = 2;
-        //    var realPathLength = Weed.BossSearch(
-        //        field, 
-        //        GetCurrentPosition(FieldCellStates.Weed, field),
-        //        GetCurrentPosition(FieldCellStates.Player, field)).Length;
-        //    Assert.AreEqual(expectedPathLength, realPathLength);
-        //}
+        [Test]
+        public void BossSearchTest()
+        {
+            var textField = new[]
+            {
+            "W@##",
+            "####",
+            "###P",
+            "####"
+            };
+            var field = Field.FromLines(textField);
+            var expectedPathLength = 6;
+            var realPathLength = Weed.BossSearch(
+            field,
+            GetCurrentPosition(FieldCellStates.Weed, field),
+            GetCurrentPosition(FieldCellStates.Player, field)).Length;
+            Assert.AreEqual(expectedPathLength, realPathLength);
+        }
+
+        [Test]
+        public void SmallBossSearchTest()
+        {
+            var textField = new[]
+            {
+            "W#",
+            "#P"
+            };
+            var field = Field.FromLines(textField);
+            var expectedPathLength = 3;
+            var realPathLength = Weed.BossSearch(
+            field,
+            GetCurrentPosition(FieldCellStates.Weed, field),
+            GetCurrentPosition(FieldCellStates.Player, field)).Length;
+            Assert.AreEqual(expectedPathLength, realPathLength);
+        }
 
         public FieldCell GetCurrentPosition(FieldCellStates state, Field field)
         {

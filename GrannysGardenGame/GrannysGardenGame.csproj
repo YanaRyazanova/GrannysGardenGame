@@ -105,6 +105,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Levels\Level1.txt" />
+    <Content Include="Levels\Level2.txt" />
+    <Content Include="Levels\Level3.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

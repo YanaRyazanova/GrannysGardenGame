@@ -48,16 +48,15 @@ namespace GrannysGardenGame.Domain
                 foreach (var incidentCell in incidentCells)
                 {
                     var nextWay =
-                        new SinglyLinkedList<FieldCell>(
-                            new FieldCell(incidentCell.X, incidentCell.Y, incidentCell.State), way);
+                    new SinglyLinkedList<FieldCell>(
+                    new FieldCell(incidentCell.X, incidentCell.Y, incidentCell.State), way);
                     if (!field.InBounds(nextWay.Value) ||
-                        visited.Contains(nextWay.Value)) continue;
+                    visited.Contains(nextWay.Value)) continue;
                     queue.Enqueue(nextWay);
                     visited.Add(nextWay.Value);
-                    if (nextWay.Value == playerPosition)
+                    if (nextWay.Value.X == playerPosition.X && nextWay.Value.Y == playerPosition.Y)
                     {
-                        correctWay = nextWay;
-                        break;
+                        return nextWay;
                     }
                 }
             }
@@ -71,7 +70,7 @@ namespace GrannysGardenGame.Domain
             {
                 for (var dx = -1; dx <= 1; dx++)
                 {
-                    if (dx != 0 && dy != 0) continue;
+                    if ((dx != 0 && dy != 0) || (dx == 0 && dy == 0)) continue;
                     incidentPoints.Add(new FieldCell(cell.X + dx, cell.Y + dy, FieldCellStates.Empty));
                 }
             }

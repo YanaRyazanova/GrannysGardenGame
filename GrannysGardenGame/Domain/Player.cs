@@ -15,14 +15,16 @@ namespace GrannysGardenGame.Domain
     }
     public class Player
     {
-        public int Health { get; }
-        public int Scores { get; }
+        public int Health;
+        public int Scores;
 
         public FieldCell CurrentPos;
 
         public Player(FieldCell initCell)
         {
             CurrentPos = initCell;
+            Scores = 0;
+            Health = 20;
         }
         
         public void Act(int x, int y) 
@@ -50,11 +52,10 @@ namespace GrannysGardenGame.Domain
             var newY = y + position.Y;
             if (newX >= 0 && newX < Game.GetWigth
                 && newY >= 0 && newY < Game.GetHeight
-                && !Game.field.IsCellContainWeed(new Weed(newX, newY))
-                && !Game.field.IsCellContainBullet(new Bullet(x, y)))
+                && !Game.field.IsCellContainWeed(new Weed(newX, newY)))
             {
                 position.State = FieldCellStates.Player;
-                CurrentPos = position;
+                CurrentPos = new FieldCell(newX, newY, FieldCellStates.Player);
             }
             else
                 CurrentPos =  new FieldCell(0, 0, FieldCellStates.Empty);
@@ -64,8 +65,12 @@ namespace GrannysGardenGame.Domain
         {
             if (Game.field.IsCellContainWeed(curWeed) 
                 && (CurrentPos.X + 1 == curWeed.X || CurrentPos.X - 1 == curWeed.X
-                || CurrentPos.Y + 1 == curWeed.Y || CurrentPos.X - 1 == curWeed.Y))
+                || CurrentPos.Y + 1 == curWeed.Y || CurrentPos.X - 1 == curWeed.Y)) 
+            {
                 curWeed.WeedState = WeedStates.Dead;
+                Scores += 4;
+            }
+               
         }
         public void FreezeWeed(Weed curWeed)
         {

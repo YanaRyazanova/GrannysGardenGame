@@ -11,13 +11,13 @@ namespace GrannysGardenGame.View
     public class GameForm : Form
     {
         private readonly ScenePainter scenePainter;
-        public GameForm()
-        {
-            var levels = LoadLevels().ToArray();
-        }
-        private static IEnumerable<Field> LoadLevels()
-        {
-            yield return Field.FromText(Properties.Resources.Level1);
-        }
+        //public GameForm()
+        //{
+        //    var levels = LoadLevels().ToArray();
+        //}
+        //private static IEnumerable<Field> LoadLevels()
+        //{
+        //    yield return Field.FromText(Properties.Resources.Level1);
+        //}
     }
 }

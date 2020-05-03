@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GrannysGardenGame.View;
 
 namespace GrannysGardenGame
 {
@@ -14,7 +15,10 @@ namespace GrannysGardenGame
         [STAThread]
         static void Main()
         {
-            Console.WriteLine("Misha is here");
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            var form = new MyMenu();
+            Application.Run(form);
         }
     }
 }

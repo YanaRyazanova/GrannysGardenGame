@@ -74,9 +74,7 @@ namespace GrannysGardenGame.Domain
         }
         public void FreezeWeed(Weed curWeed)
         {
-            if (Game.field.IsCellContainWeed(curWeed)
-                && (CurrentPos.X + 1 == curWeed.X || CurrentPos.X - 1 == curWeed.X
-                || CurrentPos.Y + 1 == curWeed.Y || CurrentPos.X - 1 == curWeed.Y))
+            if (Game.field.IsCellContainWeed(curWeed))
                 curWeed.WeedState = WeedStates.Freezed;
         }
     }

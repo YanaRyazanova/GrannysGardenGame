@@ -69,5 +69,12 @@ namespace GrannysGardenGame.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        internal static System.Drawing.Bitmap Zomb {
+            get {
+                object obj = ResourceManager.GetObject("Zomb", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

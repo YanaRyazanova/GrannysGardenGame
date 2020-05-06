@@ -76,6 +76,9 @@
       <DependentUpon>MyMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="View\ScenePainter.cs" />
+    <Compile Include="View\TestForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

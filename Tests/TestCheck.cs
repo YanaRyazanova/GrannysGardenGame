@@ -16,7 +16,7 @@ namespace Tests
         public void FieldDecryptionTest()
         {
             var textField = new[]
-           {
+            {
                 "W#@#",
                 "#W##",
                 "P###"

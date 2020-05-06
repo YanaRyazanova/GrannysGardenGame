@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GrannysGardenGame.View
 {
@@ -15,11 +16,17 @@ namespace GrannysGardenGame.View
         private Field currentField;
         private Bitmap fieldImage;
 
+        public ScenePainter(Field[] levels)  
+        {
+            currentField = levels[0];
+            CreateField();
+        }
+
         public void ChangeLevel(Field newField)
         {
             currentField = newField;
-
         }
+
         private void CreateField()
         {
             var cellWidth = Properties.Resources.Grass.Width;
@@ -27,11 +34,11 @@ namespace GrannysGardenGame.View
             fieldImage = new Bitmap(LevelSize.Width * cellWidth, LevelSize.Height * cellHeight);
             using (var graphics = Graphics.FromImage(fieldImage)) 
                 for (var x = 0; x < currentField.Width; x++)
-                for (var y = 0; y < currentField.Height; y++)
-                {
-                    var image = currentField.field[x, y] == FieldCellStates.Weed ? Properties.Resources.Grass : Properties.Resources.Grass;
-                    graphics.DrawImage(image, new Rectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight));
-                }
+                    for (var y = 0; y < currentField.Height; y++)
+                    {
+                        var image = currentField.field[x, y] == FieldCellStates.Weed ? Properties.Resources.Zomb : Properties.Resources.Grass;
+                        graphics.DrawImage(image, new Rectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight));
+                    }
         }
     }
 }

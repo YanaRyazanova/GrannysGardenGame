@@ -14,6 +14,8 @@ namespace GrannysGardenGame.View
     {
         PictureBox logoImege;
         PictureBox textBox;
+        Button newGameButton;
+        Button continueGameButton;
    
         public MyMenu()
         {
@@ -29,17 +31,14 @@ namespace GrannysGardenGame.View
            
             var backLayer = new PictureBox 
             {
-               
                 BackColor = Color.FromArgb(13, 0, 0, 0)
             };
 
             logoImege = new PictureBox 
             {
-                
-                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Logo.png"),
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\NewLogo.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
-                Dock = DockStyle.Fill,
-                
+                Dock = DockStyle.Fill
             };
 
             textBox = new PictureBox 
@@ -50,20 +49,27 @@ namespace GrannysGardenGame.View
                 Dock = DockStyle.Fill
             };
             
-            var newGameButton = new Button
+            newGameButton = new Button
             {
                 Width = 199,
                 Height = 65,
                 Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\NewGameButton.png"),
-                Dock = DockStyle.Fill
+                Dock = DockStyle.None
+            };
+            newGameButton.Click += (sender, args) => 
+            {
+                this.Hide();
+                var gameForm = new GameForm();
+                gameForm.ShowDialog();
+                this.Show();
             };
 
-            var continueGameButton = new Button
+            continueGameButton = new Button
             {
                 Width = 199,
                 Height = 65,
                 Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\ContinueGameButton.png"),
-                Dock = DockStyle.Fill
+                Dock = DockStyle.None
             };
 
             var table = new TableLayoutPanel();
@@ -73,9 +79,9 @@ namespace GrannysGardenGame.View
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, newGameButton.Height));
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, continueGameButton.Height));
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, textBox.Height));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10));
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
 
             table.Controls.Add(logoImege, 1, 0);
             table.Controls.Add(newGameButton, 1, 1);
@@ -86,6 +92,5 @@ namespace GrannysGardenGame.View
 
             Controls.Add(table);
         }
-
     }
 }

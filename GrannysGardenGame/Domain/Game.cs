@@ -15,22 +15,22 @@ namespace GrannysGardenGame.Domain
     }
     public class Game
     {
-        public static Keys KeyPressed;
-        private Player player;
-        public static Field field;
+        //public static HashSet<Keys> KeyPressed;
+        public Player player;
+        public  Field field;
         
         public GameStates GameState;
 
-        public Game(Keys keys, Player playerConst, Field fieldConst)
+        public Game(Player playerConst, Field fieldConst)
         {
-            KeyPressed = keys;
+            //KeyPressed = keys;
             player = playerConst;
             field = fieldConst;
             GameState = GameStates.Active;
         }
         public int Level { get; set; }
-        public static int GetWigth => field.Width;
-        public static int GetHeight => field.Height;
+        public int GetWigth => field.Width;
+        public int GetHeight => field.Height;
 
 
         public void GameEnd(Player player, FieldCell specialCell)

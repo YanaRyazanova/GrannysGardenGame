@@ -15,35 +15,37 @@ namespace GrannysGardenGame.View
         //private readonly ScaledViewPanel scaledViewPanel;
         private Game game;
         private readonly HashSet<Keys> pressedKeys = new HashSet<Keys>();
+        int cellWidth = 74;
+        int cellHeight = 64;
 
         public GameForm()
         {
-            //game = CreateLevel1();
+            game = CreateLevel1();
             InitializeComponent();
+            var timer = new Timer();
+            timer.Interval = 100;
+            timer.Tick += TimerTick;
+            timer.Start();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            var textField = new[] 
+            var playerImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Player.png");
+            var zombImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Zomb.png");
+            var fieldImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Field.png");
+            e.Graphics.DrawImage(fieldImage, 0, 2, game.field.Width * cellWidth, game.field.Height * cellHeight);
+            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight, 70, 97);
+            
+            foreach(var weed in game.field.weeds)
             {
-                "W#@##",
-                "##W#W",
-                "#W###",
-                "###W#",
-                "W####",
-                "##W##",
-                "#####",
-                "W#W##",
-                "####P"
-            };
-            var field = Field.FromLines(textField);
-            var player = new Player(field.initialCell);
-            e.Graphics.DrawImage(player.playerImage, new PointF(player.CurrentPos.X, player.CurrentPos.Y));
+                e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight);
+            }
         }
-        /*public void PlayerMove(int x, int y) 
+
+        protected override void OnKeyDown(KeyEventArgs e)
         {
-            var key = Game.KeyPressed;
+            var key = e.KeyData;
             var position = new FieldCell(0, 0, FieldCellStates.Empty);
 
             switch (key)
@@ -61,39 +63,41 @@ namespace GrannysGardenGame.View
                     position.Y += 1;
                     break;
             };
-                
-            var newX = x + position.X;
-            var newY = y + position.Y;
-            if (newX >= 0 && newX < Game.GetWigth
-                && newY >= 0 && newY < Game.GetHeight
-                && !Game.field.IsCellContainWeed(new Weed(newX, newY)))
+
+            var newX = game.player.CurrentPos.X + position.X;
+            var newY = game.player.CurrentPos.Y + position.Y;
+            if (newX >= 0 && newX < game.field.Width
+                && newY >= 0 && newY < game.field.Height
+               && !game.field.weeds.Contains(new Weed(newX, newY)))
             {
                 position.State = FieldCellStates.Player;
-                CurrentPos = new FieldCell(newX, newY, FieldCellStates.Player);
+                game.player.CurrentPos = new FieldCell(newX, newY, FieldCellStates.Player);
+            }  
+        }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams handleParam = base.CreateParams;
+                handleParam.ExStyle |= 0x02000000;   // WS_EX_COMPOSITED       
+                return handleParam;
             }
-            else
-                CurrentPos =  new FieldCell(0, 0, FieldCellStates.Empty);
-        }*/
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            pressedKeys.Add(e.KeyCode);
-            Game.KeyPressed = e.KeyCode;
         }
 
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
-            pressedKeys.Remove(e.KeyCode);
-            Game.KeyPressed = pressedKeys.Any() ? pressedKeys.Min() : Keys.None;
-        }
         public void InitializeComponent() 
         {
             BackColor = Color.FromArgb(42, 212, 0);
-            MinimumSize = new Size(400, 720);
+            MinimumSize = new Size(390, 720);
             Width = 360;
             Height = 640;
             
-            var houseImege = new PictureBox 
+            /*var houseImege = new PictureBox 
             {
                 
                 Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\House.png"),
@@ -120,7 +124,7 @@ namespace GrannysGardenGame.View
                 Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Level1.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.Fill
-            };*/
+            };
 
             var table = new TableLayoutPanel();
             table.RowStyles.Clear();
@@ -138,7 +142,7 @@ namespace GrannysGardenGame.View
             
             table.Dock = DockStyle.Fill;
 
-            Controls.Add(table);
+            Controls.Add(table);*/
         }
 
         public Game CreateLevel1() 
@@ -157,7 +161,7 @@ namespace GrannysGardenGame.View
             };
             var field = Field.FromLines(textField);
             var player = new Player(field.initialCell);
-            //game = new Game(pressedKeys, player, field);
+            game = new Game(player, field);
             return game;
         }
     }

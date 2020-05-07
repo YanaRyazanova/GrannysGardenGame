@@ -18,7 +18,7 @@ namespace GrannysGardenGame.View
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Gra
+            e.Gr
         }
     }
 }

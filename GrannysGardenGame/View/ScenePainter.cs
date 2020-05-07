@@ -16,15 +16,10 @@ namespace GrannysGardenGame.View
         private Field currentField;
         private Bitmap fieldImage;
 
-        public ScenePainter(Field[] levels)  
+        public ScenePainter(Field level)  
         {
-            currentField = levels[0];
+            currentField = level;
             CreateField();
-        }
-
-        public void ChangeLevel(Field newField)
-        {
-            currentField = newField;
         }
 
         private void CreateField()

@@ -27,6 +27,14 @@ namespace GrannysGardenGame.Domain
             Scores = 0;
             Health = 20;
         }
+
+        public bool CanMove(int x, int y, Field field)
+        {
+            var cell = new FieldCell(x,y,FieldCellStates.Empty);
+            if (!field.InBounds(cell) || field.field[x, y] is FieldCellStates.Weed)
+                return false;
+            return true;
+        }
         
         //public void DigUpWeed(Weed curWeed)
         //{

@@ -16,7 +16,7 @@ namespace GrannysGardenGame.Domain
         public int X;
         public int Y;
 
-        private BulletState state;
+        public  BulletState state;
         public Bullet(int x, int y)
         {
             X = x;

@@ -32,11 +32,7 @@ namespace GrannysGardenGame.View
             //foreach (var e in imagesDirectory.GetFiles("*.png"))
             //    bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
             game = CreateLevel1();
-            foreach (var weed in game.field.weeds)
-            {
-                bullets.Add(weed.Shoot());
-                //MakeBullets(weed, e, game.player, game.field);
-            }
+            GenerateBullets();
             //InitializeComponent();
             var timer = new Timer();
             timer.Interval = 100;
@@ -47,8 +43,6 @@ namespace GrannysGardenGame.View
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            //var timer = new Timer();
-            //timer.Interval = 1000;
             var playerImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Player.png");
             var zombImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Zomb.png");
             var fieldImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Field.png");
@@ -61,11 +55,11 @@ namespace GrannysGardenGame.View
             }
 
             var bulletImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Bullet.png");
-            
 
             foreach(var bullet in bullets) 
             {
-                e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
+                if (bullet.state == BulletState.Exist)
+                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
             }
         }
 
@@ -191,8 +185,34 @@ namespace GrannysGardenGame.View
             foreach(var bullet in bullets) 
             {
                 bullet.MoveBullet();
+                bullet.DeadInConflict(game.field, game.player);
             }
+            RewriteBulletsList();
+            GenerateBullets();
             Invalidate();
+        }
+
+        public void RewriteBulletsList() 
+        {
+            for(var i = 0; i < bullets.Count; i++) 
+            {
+                if (bullets[i].state == BulletState.NotExist)
+                    bullets.Remove(bullets[i]);
+            }
+        }
+
+        public void GenerateBullets() 
+        {
+            if (bullets.Count == 0) 
+            {
+                foreach (var weed in game.field.weeds)
+                {
+                for (int i = 0; i < 3; i++) 
+                {
+                    bullets.Add(weed.Shoot());
+                }  
+                }
+            }
         }
 
         public Game CreateLevel1() 

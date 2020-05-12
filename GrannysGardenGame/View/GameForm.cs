@@ -8,17 +8,17 @@ using GrannysGardenGame.Domain;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace GrannysGardenGame.View
 {
     public class GameForm : Form
     {
-        //private readonly ScenePainter scenePainter;
-        //private readonly ScaledViewPanel scaledViewPanel;
         private Game game;
         private readonly HashSet<Keys> pressedKeys = new HashSet<Keys>();
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         List<Bullet> bullets = new List<Bullet>();
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         int cellWidth = 74;
         int cellHeight = 64;
 
@@ -32,10 +32,12 @@ namespace GrannysGardenGame.View
             //foreach (var e in imagesDirectory.GetFiles("*.png"))
             //    bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
             game = CreateLevel1();
+            
             GenerateBullets();
+            
             //InitializeComponent();
-            var timer = new Timer();
-            timer.Interval = 100;
+            
+            timer.Interval = 90;
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -48,6 +50,9 @@ namespace GrannysGardenGame.View
             var fieldImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Field.png");
             e.Graphics.DrawImage(fieldImage, 0, 2, game.field.Width * cellWidth, game.field.Height * cellHeight);
             e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight, 70, 97);
+            e.Graphics.FillRectangle(Brushes.Red, 
+                game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight, cellWidth, cellHeight);
+
             
             foreach(var weed in game.field.weeds)
             {
@@ -86,6 +91,8 @@ namespace GrannysGardenGame.View
                     if (game.player.CanMove(game.player.CurrentPos.X, game.player.CurrentPos.Y + 1, game.field)) 
                         position.Y += 1;
                     break;
+                //case Keys.A:
+                    //game.player.DigUpWeed();
             };
 
             var newX = game.player.CurrentPos.X + position.X;
@@ -99,20 +106,6 @@ namespace GrannysGardenGame.View
             }  
         }
 
-        /*private void MakeBullets(Weed weed, PaintEventArgs e, Player player, Field field)
-        {
-            var bulletImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Bullet.png");
-            var bullet = weed.Shoot();
-            e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
-            while (true)
-            {
-                bullet.MoveBullet();
-                //e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
-                if (bullet.DeadInConflict(field, player))
-                    break;
-            }
-        }*/
-
         protected override CreateParams CreateParams
         {
             get
@@ -123,7 +116,7 @@ namespace GrannysGardenGame.View
             }
         }
 
-        public void InitializeComponent(Graphics graphics) 
+        public void InitializeComponent() 
         {
             BackColor = Color.FromArgb(42, 212, 0);
             MinimumSize = new Size(390, 720);
@@ -182,14 +175,33 @@ namespace GrannysGardenGame.View
 
         private void TimerTick(object sender, EventArgs e)
         {
+            game.GameEnd();
+            CheckGameState();
+            MoveBullets();
+            RewriteBulletsList();
+            GenerateBullets();
+            Invalidate();
+        }
+
+        public void CheckGameState() 
+        {
+            if (game.GameState == GameStates.Win) 
+            {
+                timer.Stop();
+                this.Hide();
+                var winWindow = new MyMenu();
+                winWindow.ShowDialog();
+                this.Hide();
+            }
+        }
+
+        private void MoveBullets()
+        {
             foreach(var bullet in bullets) 
             {
                 bullet.MoveBullet();
                 bullet.DeadInConflict(game.field, game.player);
             }
-            RewriteBulletsList();
-            GenerateBullets();
-            Invalidate();
         }
 
         public void RewriteBulletsList() 
@@ -203,14 +215,12 @@ namespace GrannysGardenGame.View
 
         public void GenerateBullets() 
         {
+            var weeds = game.field.weeds;
             if (bullets.Count == 0) 
             {
                 foreach (var weed in game.field.weeds)
-                {
-                for (int i = 0; i < 3; i++) 
-                {
+                { 
                     bullets.Add(weed.Shoot());
-                }  
                 }
             }
         }
@@ -223,10 +233,10 @@ namespace GrannysGardenGame.View
                 "##W#W",
                 "#W###",
                 "###W#",
-                "W####",
-                "##W##",
                 "#####",
-                "W#W##",
+                "#####",
+                "#####",
+                "W####",
                 "####P"
             };
             var field = Field.FromLines(textField);

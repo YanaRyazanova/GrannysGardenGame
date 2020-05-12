@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace GrannysGardenGame.Domain
 {
@@ -27,6 +28,7 @@ namespace GrannysGardenGame.Domain
         public void MoveBullet()
         {
             this.Y++;
+            Thread.Sleep(100);
         }
 
         public bool DeadInConflict(Field field, Player player)

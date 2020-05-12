@@ -79,6 +79,12 @@
     <Compile Include="View\TestForm1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="View\WinWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\WinWindow.Designer.cs">
+      <DependentUpon>WinWindow.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

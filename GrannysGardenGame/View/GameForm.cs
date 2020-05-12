@@ -18,15 +18,25 @@ namespace GrannysGardenGame.View
         private Game game;
         private readonly HashSet<Keys> pressedKeys = new HashSet<Keys>();
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
+        List<Bullet> bullets = new List<Bullet>();
         int cellWidth = 74;
         int cellHeight = 64;
 
         public GameForm()
         {
+            BackColor = Color.FromArgb(42, 212, 0);
+            MinimumSize = new Size(390, 720);
+            Width = 360;
+            Height = 640;
             //var imagesDirectory = new DirectoryInfo("Images");
             //foreach (var e in imagesDirectory.GetFiles("*.png"))
             //    bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
             game = CreateLevel1();
+            foreach (var weed in game.field.weeds)
+            {
+                bullets.Add(weed.Shoot());
+                //MakeBullets(weed, e, game.player, game.field);
+            }
             //InitializeComponent();
             var timer = new Timer();
             timer.Interval = 100;
@@ -39,9 +49,9 @@ namespace GrannysGardenGame.View
             base.OnPaint(e);
             //var timer = new Timer();
             //timer.Interval = 1000;
-            var playerImage = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\Player.png");
-            var zombImage = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\Zomb.png");
-            var fieldImage = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\Field.png");
+            var playerImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Player.png");
+            var zombImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Zomb.png");
+            var fieldImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Field.png");
             e.Graphics.DrawImage(fieldImage, 0, 2, game.field.Width * cellWidth, game.field.Height * cellHeight);
             e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight, 70, 97);
             
@@ -50,9 +60,12 @@ namespace GrannysGardenGame.View
                 e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight);
             }
 
-            foreach (var weed in game.field.weeds)
+            var bulletImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Bullet.png");
+            
+
+            foreach(var bullet in bullets) 
             {
-                MakeBullets(weed, e, game.player, game.field);
+                e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
             }
         }
 
@@ -92,26 +105,19 @@ namespace GrannysGardenGame.View
             }  
         }
 
-        
-
-        public void DrawLevel(Graphics graphics) 
+        /*private void MakeBullets(Weed weed, PaintEventArgs e, Player player, Field field)
         {
-            Invalidate();
-        }
-
-        private void MakeBullets(Weed weed, PaintEventArgs e, Player player, Field field)
-        {
-            var bulletImage = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\Bullet.png");
+            var bulletImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Bullet.png");
             var bullet = weed.Shoot();
             e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
             while (true)
             {
                 bullet.MoveBullet();
-                e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
+                //e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
                 if (bullet.DeadInConflict(field, player))
                     break;
             }
-        }
+        }*/
 
         protected override CreateParams CreateParams
         {
@@ -119,16 +125,7 @@ namespace GrannysGardenGame.View
             {
                 CreateParams handleParam = base.CreateParams;
                 handleParam.ExStyle |= 0x02000000;   // WS_EX_COMPOSITED  
-                return handleParam;
-            var playerImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Player.png");
-            var zombImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Zomb.png");
-            var fieldImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Field.png");
-            graphics.DrawImage(fieldImage, 0, 150, game.field.Width * cellWidth, game.field.Height * cellHeight);
-            graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 120, 70, 97);
-            
-            foreach(var weed in game.field.weeds)
-            {
-                graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight + 130);
+                return handleParam;               
             }
         }
 
@@ -188,19 +185,14 @@ namespace GrannysGardenGame.View
 
             Controls.Add(table);
         }
+
         private void TimerTick(object sender, EventArgs e)
         {
-            Invalidate();
-        }
-
-        protected override CreateParams CreateParams
-        {
-            get
+            foreach(var bullet in bullets) 
             {
-                CreateParams handleParam = base.CreateParams;
-                handleParam.ExStyle |= 0x02000000;   // WS_EX_COMPOSITED       
-                return handleParam;
+                bullet.MoveBullet();
             }
+            Invalidate();
         }
 
         public Game CreateLevel1() 

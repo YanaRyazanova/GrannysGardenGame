@@ -17,7 +17,7 @@ namespace GrannysGardenGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var form = new GameForm();
+            var form = new MyMenu();
             Application.Run(form);
         }
     }

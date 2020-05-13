@@ -58,8 +58,8 @@ namespace Tests
             var player = new Player(init);
             var keys = new List<Keys>();
             keys.Add(Keys.Right);
-            var game = new Game(keys[0], player, field);
-            player.Act(init.X, init.Y);
+            var game = new Game(player, field);
+            player.CurrentPos.X++;
             var actual = player.CurrentPos;
             var exept = new FieldCell(1, 2, FieldCellStates.Player);
             Assert.AreEqual(exept.X, actual.X);
@@ -88,9 +88,10 @@ namespace Tests
             };
             var field = Field.FromLines(textField);
             var player = new Player(field.initialCell);
+            var game = new Game(player, field);
             var weed = field.weeds[0];
             var str = "Bad";
-            player.DigUpWeed(weed);
+            game.DigUpWeed(weed);
             if (weed.WeedState != WeedStates.Dead)
                 str = "Test is correct";
             Assert.AreEqual(str, "Test is correct");
@@ -110,10 +111,10 @@ namespace Tests
             var player = new Player(init);
             var keys = new List<Keys>();
             keys.Add(Keys.Right);
-            var game = new Game(keys[0], player, field);
+            var game = new Game(player, field);
             var weed = field.weeds[0];
-            player.Act(init.X, init.Y);
-            player.DigUpWeed(weed);
+            player.CurrentPos.X++;
+            game.DigUpWeed(weed);
             Assert.AreEqual(weed.WeedState, WeedStates.Dead);
             Assert.AreEqual(4, player.Scores);
         }
@@ -132,10 +133,10 @@ namespace Tests
             var player = new Player(init);
             var keys = new List<Keys>();
             keys.Add(Keys.Right);
-            var game = new Game(keys[0], player, field);
+            var game = new Game(player, field);
             var weed = field.weeds[0];
-            player.Act(init.X, init.Y);
-            player.FreezeWeed(weed);
+            player.CurrentPos.X++;
+            game.FreezeWeed(weed);
             Assert.AreEqual(weed.WeedState, WeedStates.Freezed);
         }
 
@@ -204,9 +205,9 @@ namespace Tests
             var player = new Player(init);
             var keys = new List<Keys>();
             keys.Add(Keys.Right);
-            var game = new Game(keys[0], player, field);
-            player.Act(init.X, init.Y);
-            game.GameEnd(player, field.winCell);
+            var game = new Game(player, field);
+            player.CurrentPos.X++;
+            game.GameEnd();
             Assert.AreEqual(game.GameState, GameStates.Win);
         }
 
@@ -225,12 +226,12 @@ namespace Tests
             player.Health -= 16;
             var keys = new List<Keys>();
             keys.Add(Keys.Right);
-            var game = new Game(keys[0], player, field);
-            player.Act(init.X, init.Y);
+            var game = new Game(player, field);
+            player.CurrentPos.X++;
             var weed = field.weeds[0];
             var bullet = weed.Shoot();
             bullet.DeadInConflict(field, player);
-            game.GameEnd(player, field.winCell);
+            game.GameEnd();
             Assert.AreEqual(GameStates.Lose, game.GameState);
         }
 

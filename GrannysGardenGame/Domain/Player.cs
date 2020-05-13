@@ -34,10 +34,6 @@ namespace GrannysGardenGame.Domain
             if (!field.InBounds(cell) || field.field[x, y] is FieldCellStates.Weed)
                 return false;
             return true;
-        }
-
-       
-        
-       
+        } 
     }
 }

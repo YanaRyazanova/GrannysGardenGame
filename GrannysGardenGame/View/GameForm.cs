@@ -28,9 +28,6 @@ namespace GrannysGardenGame.View
             MinimumSize = new Size(390, 720);
             Width = 360;
             Height = 640;
-            //var imagesDirectory = new DirectoryInfo("Images");
-            //foreach (var e in imagesDirectory.GetFiles("*.png"))
-            //    bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
             game = CreateLevel1();
             
             GenerateBullets();
@@ -40,26 +37,40 @@ namespace GrannysGardenGame.View
             timer.Interval = 90;
             timer.Tick += TimerTick;
             timer.Start();
+
+            var learnImage = new Bitmap(@".\Images\Learn.png");
+            var learnBox = new PictureBox
+            {
+                Width = 310,
+                Height = 201,
+                Location = new Point(25, 200),
+                Image = learnImage
+            };
+            Controls.Add(learnBox);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            var playerImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Player.png");
-            var zombImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Zomb.png");
-            var fieldImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Field.png");
+
+            var playerImage = new Bitmap(@".\Images\Player.png");
+            var zombImage = new Bitmap(@".\Images\Zomb.png");
+            var deadZomb = new Bitmap(@".\Images\DeadWeed.png");
+            var fieldImage = new Bitmap(@".\Images\Field.png");
             e.Graphics.DrawImage(fieldImage, 0, 2, game.field.Width * cellWidth, game.field.Height * cellHeight);
             e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight, 70, 97);
             e.Graphics.FillRectangle(Brushes.Red, 
                 game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight, cellWidth, cellHeight);
 
-            
             foreach(var weed in game.field.weeds)
             {
-                e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight);
+                if (weed.WeedState != WeedStates.Dead)
+                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight);
+                if (weed.WeedState == WeedStates.Dead)
+                    e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight);
             }
 
-            var bulletImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Bullet.png");
+            var bulletImage = new Bitmap(@".\Images\Bullet.png");
 
             foreach(var bullet in bullets) 
             {
@@ -91,8 +102,12 @@ namespace GrannysGardenGame.View
                     if (game.player.CanMove(game.player.CurrentPos.X, game.player.CurrentPos.Y + 1, game.field)) 
                         position.Y += 1;
                     break;
-                //case Keys.A:
-                    //game.player.DigUpWeed();
+                case Keys.D:
+                    game.DigUpWeed(new Weed(game.player.CurrentPos.X, game.player.CurrentPos.Y - 1));
+                    break;
+                case Keys.A:
+                    game.FreezeWeed(new Weed(game.player.CurrentPos.X, game.player.CurrentPos.Y - 1));
+                    break;
             };
 
             var newX = game.player.CurrentPos.X + position.X;
@@ -104,6 +119,12 @@ namespace GrannysGardenGame.View
                 position.State = FieldCellStates.Player;
                 game.player.CurrentPos = new FieldCell(newX, newY, FieldCellStates.Player);
             }  
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            Controls.Clear();
         }
 
         protected override CreateParams CreateParams
@@ -126,21 +147,21 @@ namespace GrannysGardenGame.View
             var houseImege = new PictureBox 
             {
                 
-                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\House.png"),
+                Image = new Bitmap(@".\Images\House.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.Fill,
             };
 
             var healthText = new PictureBox 
             {
-                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\HealthText.png"),
+                Image = new Bitmap(@".\Images\HealthText.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.None
             };
 
             var scoreText = new PictureBox 
             {
-                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\ScoreTextpng.png"),
+                Image = new Bitmap(@".\Images\ScoreTextpng.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.None
             };
@@ -178,20 +199,28 @@ namespace GrannysGardenGame.View
             game.GameEnd();
             CheckGameState();
             MoveBullets();
-            RewriteBulletsList();
+            RewriteBulletsAndWeedsList();
             GenerateBullets();
             Invalidate();
         }
 
-        public void CheckGameState() 
+        public void CheckGameState()
         {
-            if (game.GameState == GameStates.Win) 
+            if (game.GameState == GameStates.Win)
             {
                 timer.Stop();
                 this.Hide();
-                var winWindow = new MyMenu();
+                var winWindow = new LevelPassed();
                 winWindow.ShowDialog();
+                this.Close();
+            }
+            if (game.GameState == GameStates.Lose)
+            {
+                timer.Stop();
                 this.Hide();
+                var winWindow = new LoseForm();
+                winWindow.ShowDialog();
+                this.Close();
             }
         }
 
@@ -204,12 +233,17 @@ namespace GrannysGardenGame.View
             }
         }
 
-        public void RewriteBulletsList() 
+        public void RewriteBulletsAndWeedsList() 
         {
             for(var i = 0; i < bullets.Count; i++) 
             {
                 if (bullets[i].state == BulletState.NotExist)
                     bullets.Remove(bullets[i]);
+            }
+            for(var i = 0; i < game.field.weeds.Count; i++)
+            {
+                if (game.field.weeds[i].WeedState == WeedStates.Dead)
+                    game.field.weeds.RemoveAt(i);
             }
         }
 
@@ -220,7 +254,8 @@ namespace GrannysGardenGame.View
             {
                 foreach (var weed in game.field.weeds)
                 { 
-                    bullets.Add(weed.Shoot());
+                    if (weed.WeedState == WeedStates.Alive)
+                        bullets.Add(weed.Shoot());
                 }
             }
         }
@@ -229,14 +264,14 @@ namespace GrannysGardenGame.View
         {
             var textField = new[] 
             {
-                "W#@##",
+                "W#@#W",
                 "##W#W",
                 "#W###",
-                "###W#",
+                "W##W#",
                 "#####",
+                "##W##",
                 "#####",
-                "#####",
-                "W####",
+                "W#W##",
                 "####P"
             };
             var field = Field.FromLines(textField);

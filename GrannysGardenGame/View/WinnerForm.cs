@@ -31,22 +31,21 @@ namespace GrannysGardenGame.View
                 BackColor = Color.FromArgb(13, 0, 0, 0)
             };
 
-
             textBox = new PictureBox
             {
                 Width = 312,
                 Height = 312,
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\U Won.png"),
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\U Won.png"),
                 SizeMode = PictureBoxSizeMode.Normal,
-                Dock = DockStyle.None
+                Dock = DockStyle.Fill
             };
 
             exitGameButton = new Button
             {
                 Width = 199,
                 Height = 65,
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\ExitGame.png"),
-                Dock = DockStyle.None
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\ExitGame.png"),
+                Dock = DockStyle.Fill
             };
 
             exitGameButton.Click += (sender, args) =>
@@ -72,7 +71,6 @@ namespace GrannysGardenGame.View
             table.Dock = DockStyle.Fill;
 
             Controls.Add(table);
-
         }
     }
 }

@@ -45,19 +45,33 @@ namespace GrannysGardenGame.Domain
 
         public void DigUpWeed(Weed curWeed)
         {
-            if (field.weeds.Contains(curWeed) 
-               && (player.CurrentPos.X + 1 == curWeed.X || player.CurrentPos.X - 1 == curWeed.X
-                || player.CurrentPos.Y + 1 == curWeed.Y || player.CurrentPos.X - 1 == curWeed.Y)) 
+            var i = FindWeed(curWeed);
+            if (i != -1) 
             {
-                curWeed.WeedState = WeedStates.Dead;
-                player.Scores += 4;
-            }
-               
+                if (player.CurrentPos.X == curWeed.X && player.CurrentPos.Y - 1 == curWeed.Y)
+                {
+                    field.weeds[i].WeedState = WeedStates.Dead;
+                    field.field[field.weeds[i].X, field.weeds[i].Y] = FieldCellStates.Empty;
+                    player.Scores += 4;
+                }
+            }   
         }
+
+        public int FindWeed(Weed curWeed)
+        {
+            foreach(var item in field.weeds)
+            {
+                if (curWeed.X == item.X && curWeed.Y == item.Y && curWeed.WeedState == item.WeedState)
+                    return field.weeds.IndexOf(item);
+            }
+            return -1;
+        }
+
         public void FreezeWeed(Weed curWeed)
         {
-            if (field.IsCellContainWeed(curWeed))
-                curWeed.WeedState = WeedStates.Freezed;
+            var i = FindWeed(curWeed);
+            if (i != -1 && player.CurrentPos.X == curWeed.X && player.CurrentPos.Y - 1 == curWeed.Y)
+                field.weeds[i].WeedState = WeedStates.Freezed;
         }
     }
 }

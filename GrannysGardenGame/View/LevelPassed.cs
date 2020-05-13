@@ -23,7 +23,7 @@ namespace GrannysGardenGame.View
         public void InitializeComponent()
         {
             BackColor = Color.FromArgb(42, 212, 0);
-            MinimumSize = new Size(400, 720);
+            MinimumSize = new Size(440, 720);
             Width = 360;
             Height = 640;
 
@@ -35,18 +35,18 @@ namespace GrannysGardenGame.View
 
             textBox = new PictureBox
             {
-                Width = 312,
-                Height = 312,
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\LevelPassed.png"),
-                SizeMode = PictureBoxSizeMode.Normal,
+                Width = 340,
+                Height = 120,
+                Image = new Bitmap(@".\Images\LevelPassedShort.png"),
+                SizeMode = PictureBoxSizeMode.StretchImage,
                 Dock = DockStyle.None
             };
 
             newGameButton = new Button
             {
-                Width = 199,
+                Width = 340,
                 Height = 65,
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\PlayMore.png"),
+                Image = new Bitmap(@".\Images\PlayMore.png"),
                 Dock = DockStyle.None
             };
             newGameButton.Click += (sender, args) =>
@@ -59,9 +59,9 @@ namespace GrannysGardenGame.View
 
             exitGameButton = new Button
             {
-                Width = 199,
+                Width = 340,
                 Height = 65,
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\ExitGame.png"),
+                Image = new Bitmap(@".\Images\ExitGame.png"),
                 Dock = DockStyle.None
             };
 
@@ -76,6 +76,7 @@ namespace GrannysGardenGame.View
             var table = new TableLayoutPanel();
             table.RowStyles.Clear();
             table.ColumnStyles.Clear();
+            table.RowStyles.Add(new RowStyle(SizeType.Absolute, textBox.Height * 2));
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, textBox.Height));
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, newGameButton.Height));
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, exitGameButton.Height));

@@ -36,7 +36,7 @@ namespace GrannysGardenGame.View
 
             logoImege = new PictureBox 
             {
-                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\NewLogo.png"),
+                Image = new Bitmap(@".\Images\NewLogo.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.Fill
             };
@@ -44,7 +44,7 @@ namespace GrannysGardenGame.View
             textBox = new PictureBox 
             {
                 Width = 312,
-                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\TextBox.png"),
+                Image = new Bitmap(@".\Images\TextBoxNew.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.Fill
             };
@@ -53,10 +53,9 @@ namespace GrannysGardenGame.View
             {
                 Width = 199,
                 Height = 65,
-                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\NewGameButton.png"),
+                Image = new Bitmap(@".\Images\NewGameButton.png"),
                 Dock = DockStyle.None
             };
-
             newGameButton.Click += (sender, args) => 
             {
                 this.Hide();
@@ -69,8 +68,15 @@ namespace GrannysGardenGame.View
             {
                 Width = 199,
                 Height = 65,
-                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\ContinueGameButton.png"),
+                Image = new Bitmap(@".\Images\ContinueGameButton.png"),
                 Dock = DockStyle.None
+            };
+            continueGameButton.Click += (sender, args) =>
+            {
+                this.Hide();
+                var gameForm = new GameForm();
+                gameForm.ShowDialog();
+                this.Show();
             };
 
             var table = new TableLayoutPanel();

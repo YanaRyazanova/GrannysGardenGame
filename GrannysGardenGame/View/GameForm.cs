@@ -40,14 +40,23 @@ namespace GrannysGardenGame.View
             timer.Start();
 
             var learnImage = new Bitmap(@".\Images\Learn.png");
+            var toWinImage = new Bitmap(@".\Images\ToWin.png");
             var learnBox = new PictureBox
             {
-                Width = 310,
+                Width = 316,
                 Height = 201,
                 Location = new Point(25, 200),
                 Image = learnImage
             };
             Controls.Add(learnBox);
+            var toWinBox = new PictureBox
+            {
+                Width = 145,
+                Height = 100,
+                Location = new Point(120, 40),
+                Image = toWinImage
+            };
+            Controls.Add(toWinBox);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -56,7 +65,17 @@ namespace GrannysGardenGame.View
 
             var houseImage = new Bitmap(@".\Images\House.png");
             var grannysImage = new Bitmap(@".\Images\Granny.png");
-            e.Graphics.FillRectangle(Brushes.LightGreen, 0, 0, 390, 60);
+            var healthText = new Bitmap(@".\Images\HealthText.png");
+            var scoreText = new Bitmap(@".\Images\ScoreTextpng.png");
+            var h = game.player.Health;
+            var s = game.player.Scores;
+            var health = new Rectangle(new Point(40 + healthText.Width, 10), new Size((500 * h) / 100, 23));
+
+            e.Graphics.FillRectangle(Brushes.LightGreen, 0, 0, 390, 70);
+            e.Graphics.FillRectangle(Brushes.Red, health);
+            e.Graphics.DrawString(s.ToString(), new Font(new FontFamily("Segoe UI Symbol"), 18, FontStyle.Bold), Brushes.Black, 40 + scoreText.Width, 31);
+            e.Graphics.DrawImage(healthText, 12,12);
+            e.Graphics.DrawImage(scoreText, 12, 41);
             e.Graphics.DrawImage(grannysImage, 50, 60, 64, 79);
             e.Graphics.DrawImage(houseImage, 210, 0, 150, 140);
            
@@ -133,7 +152,10 @@ namespace GrannysGardenGame.View
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            Controls.Clear();
+            if (Controls.Count > 1)
+                Controls.RemoveAt(0);
+            else
+                Controls.Clear();
         }
 
         protected override CreateParams CreateParams

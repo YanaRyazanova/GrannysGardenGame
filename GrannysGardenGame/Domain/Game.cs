@@ -36,21 +36,23 @@ namespace GrannysGardenGame.Domain
         public void GameEnd()
         {
             if(player.CurrentPos.X == field.winCell.X && player.CurrentPos.Y == field.winCell.Y) //Возможно потребуется переопределить метод
+            {
                 GameState = GameStates.Win;
+            }
             if (player.Health <= 0)
                 GameState = GameStates.Lose;
         }
 
         public void DigUpWeed(Weed curWeed)
         {
-            if (field.weeds.Contains(curWeed)
-                && (player.CurrentPos.X + 1 == curWeed.X || player.CurrentPos.X - 1 == curWeed.X
-                                                         || player.CurrentPos.Y + 1 == curWeed.Y || player.CurrentPos.X - 1 == curWeed.Y))
+            if (field.weeds.Contains(curWeed) 
+               && (player.CurrentPos.X + 1 == curWeed.X || player.CurrentPos.X - 1 == curWeed.X
+                || player.CurrentPos.Y + 1 == curWeed.Y || player.CurrentPos.X - 1 == curWeed.Y)) 
             {
                 curWeed.WeedState = WeedStates.Dead;
                 player.Scores += 4;
             }
-
+               
         }
         public void FreezeWeed(Weed curWeed)
         {

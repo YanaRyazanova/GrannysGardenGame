@@ -36,7 +36,7 @@ namespace GrannysGardenGame.View
 
             logoImege = new PictureBox 
             {
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\NewLogo.png"),
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\NewLogo.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.Fill
             };
@@ -44,7 +44,7 @@ namespace GrannysGardenGame.View
             textBox = new PictureBox 
             {
                 Width = 312,
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\TextBoxNew.png"),
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\TextBox.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.Fill
             };
@@ -53,9 +53,10 @@ namespace GrannysGardenGame.View
             {
                 Width = 199,
                 Height = 65,
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\NewGameButton.png"),
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\NewGameButton.png"),
                 Dock = DockStyle.None
             };
+
             newGameButton.Click += (sender, args) => 
             {
                 this.Hide();
@@ -68,7 +69,7 @@ namespace GrannysGardenGame.View
             {
                 Width = 199,
                 Height = 65,
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\ContinueGameButton.png"),
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\ContinueGameButton.png"),
                 Dock = DockStyle.None
             };
 
@@ -91,12 +92,6 @@ namespace GrannysGardenGame.View
             table.Dock = DockStyle.Fill;
 
             Controls.Add(table);
-
-        }
-
-        private void MyMenu_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -32,11 +32,11 @@ namespace GrannysGardenGame.View
             //foreach (var e in imagesDirectory.GetFiles("*.png"))
             //    bitmaps[e.Name] = (Bitmap)Image.FromFile(e.FullName);
             game = CreateLevel1();
-
+            
             GenerateBullets();
-
+            
             //InitializeComponent();
-
+            
             timer.Interval = 90;
             timer.Tick += TimerTick;
             timer.Start();
@@ -45,23 +45,23 @@ namespace GrannysGardenGame.View
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            var playerImage = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\Player.png");
-            var zombImage = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\Zomb.png");
-            var fieldImage = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\Field.png");
+            var playerImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Player.png");
+            var zombImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Zomb.png");
+            var fieldImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Field.png");
             e.Graphics.DrawImage(fieldImage, 0, 2, game.field.Width * cellWidth, game.field.Height * cellHeight);
             e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight, 70, 97);
-            e.Graphics.FillRectangle(Brushes.Red,
+            e.Graphics.FillRectangle(Brushes.Red, 
                 game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight, cellWidth, cellHeight);
 
-
-            foreach (var weed in game.field.weeds)
+            
+            foreach(var weed in game.field.weeds)
             {
                 e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight);
             }
 
-            var bulletImage = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\Bullet.png");
+            var bulletImage = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\Bullet.png");
 
-            foreach (var bullet in bullets)
+            foreach(var bullet in bullets) 
             {
                 if (bullet.state == BulletState.Exist)
                     e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
@@ -88,10 +88,10 @@ namespace GrannysGardenGame.View
                         position.Y -= 1;
                     break;
                 case Keys.Down:
-                    if (game.player.CanMove(game.player.CurrentPos.X, game.player.CurrentPos.Y + 1, game.field))
+                    if (game.player.CanMove(game.player.CurrentPos.X, game.player.CurrentPos.Y + 1, game.field)) 
                         position.Y += 1;
                     break;
-                    //case Keys.A:
+                //case Keys.A:
                     //game.player.DigUpWeed();
             };
 
@@ -103,7 +103,7 @@ namespace GrannysGardenGame.View
             {
                 position.State = FieldCellStates.Player;
                 game.player.CurrentPos = new FieldCell(newX, newY, FieldCellStates.Player);
-            }
+            }  
         }
 
         protected override CreateParams CreateParams
@@ -112,35 +112,35 @@ namespace GrannysGardenGame.View
             {
                 CreateParams handleParam = base.CreateParams;
                 handleParam.ExStyle |= 0x02000000;   // WS_EX_COMPOSITED  
-                return handleParam;
+                return handleParam;               
             }
         }
 
-        public void InitializeComponent()
+        public void InitializeComponent() 
         {
             BackColor = Color.FromArgb(42, 212, 0);
             MinimumSize = new Size(390, 720);
             Width = 360;
             Height = 640;
-
-            var houseImege = new PictureBox
+            
+            var houseImege = new PictureBox 
             {
-
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\House.png"),
+                
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\House.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.Fill,
             };
 
-            var healthText = new PictureBox
+            var healthText = new PictureBox 
             {
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\HealthText.png"),
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\HealthText.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.None
             };
 
-            var scoreText = new PictureBox
+            var scoreText = new PictureBox 
             {
-                Image = new Bitmap(@"C:\Users\mbara\OneDrive\Documents\ЯТП\Granny's Garden Game\GrannysGardenGame\Images\ScoreTextpng.png"),
+                Image = new Bitmap(@"C:\Users\Пользователь\More\Desktop\Game\GrannysGardenGame\Images\ScoreTextpng.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Dock = DockStyle.None
             };
@@ -149,13 +149,13 @@ namespace GrannysGardenGame.View
             table.RowStyles.Clear();
             table.ColumnStyles.Clear();
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, houseImege.Height));
-
+           
             table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
 
             table.Controls.Add(houseImege, 1, 0);
             table.Controls.Add(healthText, 0, 0);
-
+            
             table.Dock = DockStyle.Fill;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             this.SuspendLayout();
@@ -183,13 +183,13 @@ namespace GrannysGardenGame.View
             Invalidate();
         }
 
-        public void CheckGameState()
+        public void CheckGameState() 
         {
-            if (game.GameState == GameStates.Win)
+            if (game.GameState == GameStates.Win) 
             {
                 timer.Stop();
                 this.Hide();
-                var winWindow = new LevelPassed();
+                var winWindow = new MyMenu();
                 winWindow.ShowDialog();
                 this.Hide();
             }
@@ -197,37 +197,37 @@ namespace GrannysGardenGame.View
 
         private void MoveBullets()
         {
-            foreach (var bullet in bullets)
+            foreach(var bullet in bullets) 
             {
                 bullet.MoveBullet();
                 bullet.DeadInConflict(game.field, game.player);
             }
         }
 
-        public void RewriteBulletsList()
+        public void RewriteBulletsList() 
         {
-            for (var i = 0; i < bullets.Count; i++)
+            for(var i = 0; i < bullets.Count; i++) 
             {
                 if (bullets[i].state == BulletState.NotExist)
                     bullets.Remove(bullets[i]);
             }
         }
 
-        public void GenerateBullets()
+        public void GenerateBullets() 
         {
             var weeds = game.field.weeds;
-            if (bullets.Count == 0)
+            if (bullets.Count == 0) 
             {
                 foreach (var weed in game.field.weeds)
-                {
+                { 
                     bullets.Add(weed.Shoot());
                 }
             }
         }
 
-        public Game CreateLevel1()
+        public Game CreateLevel1() 
         {
-            var textField = new[]
+            var textField = new[] 
             {
                 "W#@##",
                 "##W#W",

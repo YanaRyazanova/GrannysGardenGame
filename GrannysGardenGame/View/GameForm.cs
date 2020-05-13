@@ -19,13 +19,14 @@ namespace GrannysGardenGame.View
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         List<Bullet> bullets = new List<Bullet>();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        int cellWidth = 74;
-        int cellHeight = 64;
+        int cellWidth = 78;
+        int cellHeight = 54;
 
         public GameForm()
         {
             BackColor = Color.FromArgb(42, 212, 0);
-            MinimumSize = new Size(390, 720);
+            MinimumSize = new Size(390, 700);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Width = 360;
             Height = 640;
             game = CreateLevel1();
@@ -53,21 +54,29 @@ namespace GrannysGardenGame.View
         {
             base.OnPaint(e);
 
+            var houseImage = new Bitmap(@".\Images\House.png");
+            var grannysImage = new Bitmap(@".\Images\Granny.png");
+            e.Graphics.FillRectangle(Brushes.LightGreen, 0, 0, 390, 60);
+            e.Graphics.DrawImage(grannysImage, 50, 60, 64, 79);
+            e.Graphics.DrawImage(houseImage, 210, 0, 150, 140);
+           
+
             var playerImage = new Bitmap(@".\Images\Player.png");
             var zombImage = new Bitmap(@".\Images\Zomb.png");
             var deadZomb = new Bitmap(@".\Images\DeadWeed.png");
             var fieldImage = new Bitmap(@".\Images\Field.png");
-            e.Graphics.DrawImage(fieldImage, 0, 2, game.field.Width * cellWidth, game.field.Height * cellHeight);
+
+            e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
             e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight, 70, 97);
             e.Graphics.FillRectangle(Brushes.Red, 
-                game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight, cellWidth, cellHeight);
+                game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight + 134, cellWidth, cellHeight);
 
             foreach(var weed in game.field.weeds)
             {
                 if (weed.WeedState != WeedStates.Dead)
-                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight);
+                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight + 134);
                 if (weed.WeedState == WeedStates.Dead)
-                    e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight);
+                    e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 134);
             }
 
             var bulletImage = new Bitmap(@".\Images\Bullet.png");
@@ -75,7 +84,7 @@ namespace GrannysGardenGame.View
             foreach(var bullet in bullets) 
             {
                 if (bullet.state == BulletState.Exist)
-                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 40, 30, 30);
+                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth, bullet.Y * cellHeight - 40 + 134, 30, 30);
             }
         }
 
@@ -139,19 +148,6 @@ namespace GrannysGardenGame.View
 
         public void InitializeComponent() 
         {
-            BackColor = Color.FromArgb(42, 212, 0);
-            MinimumSize = new Size(390, 720);
-            Width = 360;
-            Height = 640;
-            
-            var houseImege = new PictureBox 
-            {
-                
-                Image = new Bitmap(@".\Images\House.png"),
-                SizeMode = PictureBoxSizeMode.AutoSize,
-                Dock = DockStyle.Fill,
-            };
-
             var healthText = new PictureBox 
             {
                 Image = new Bitmap(@".\Images\HealthText.png"),
@@ -169,12 +165,12 @@ namespace GrannysGardenGame.View
             var table = new TableLayoutPanel();
             table.RowStyles.Clear();
             table.ColumnStyles.Clear();
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, houseImege.Height));
+            
            
             table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
 
-            table.Controls.Add(houseImege, 1, 0);
+            
             table.Controls.Add(healthText, 0, 0);
             
             table.Dock = DockStyle.Fill;

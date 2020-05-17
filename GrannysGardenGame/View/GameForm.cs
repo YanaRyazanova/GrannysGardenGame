@@ -39,6 +39,7 @@ namespace GrannysGardenGame.View
 
             var learnImage = new Bitmap(@".\Images\Learn.png");
             var toWinImage = new Bitmap(@".\Images\ToWin.png");
+            var zaBabkuIPomidoryImage = new Bitmap(@".\Images\ZaBabku.png");
             var learnBox = new PictureBox
             {
                 Width = 316,
@@ -48,6 +49,7 @@ namespace GrannysGardenGame.View
             };
 
             Controls.Add(learnBox);
+            
             var toWinBox = new PictureBox
             {
                 Width = 145,
@@ -55,7 +57,18 @@ namespace GrannysGardenGame.View
                 Location = new Point(120, 40),
                 Image = toWinImage
             };
+            
             Controls.Add(toWinBox);
+
+            var zaBabkuBox = new PictureBox
+            {
+                Width = 144,
+                Height = 75,
+                Location = new Point(230, 490),
+                Image = zaBabkuIPomidoryImage
+            };
+
+            Controls.Add(zaBabkuBox);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -68,8 +81,8 @@ namespace GrannysGardenGame.View
             var scoreText = new Bitmap(@".\Images\ScoreTextpng.png");
             var h = game.player.Health;
             var s = game.player.Scores;
-            var health = new Rectangle(new Point(42 + healthText.Width, 13), new Size((675 * h) / 100, 13));
-            var health2 = new Rectangle(new Point(40 + healthText.Width, 11), new Size(139, 17));
+            var health = new Rectangle(new Point(42 + healthText.Width, 14), new Size((675 * h) / 100, 12));
+            var health2 = new Rectangle(new Point(40 + healthText.Width, 12), new Size(139, 16));
 
             e.Graphics.FillRectangle(Brushes.LightGreen, 0, 0, 390, 70);
             e.Graphics.FillRectangle(Brushes.Black, health2);

@@ -221,6 +221,9 @@
     <Content Include="Images\Ur Killed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\ZaBabku.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Zomb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

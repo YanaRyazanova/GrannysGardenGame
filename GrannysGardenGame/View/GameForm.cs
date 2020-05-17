@@ -68,9 +68,11 @@ namespace GrannysGardenGame.View
             var scoreText = new Bitmap(@".\Images\ScoreTextpng.png");
             var h = game.player.Health;
             var s = game.player.Scores;
-            var health = new Rectangle(new Point(40 + healthText.Width, 10), new Size((500 * h) / 100, 23));
+            var health = new Rectangle(new Point(42 + healthText.Width, 13), new Size((675 * h) / 100, 13));
+            var health2 = new Rectangle(new Point(40 + healthText.Width, 11), new Size(139, 17));
 
             e.Graphics.FillRectangle(Brushes.LightGreen, 0, 0, 390, 70);
+            e.Graphics.FillRectangle(Brushes.Black, health2);
             e.Graphics.FillRectangle(Brushes.Red, health);
             e.Graphics.DrawString(s.ToString(), new Font(new FontFamily("Segoe UI Symbol"), 18, FontStyle.Bold), Brushes.Black, 40 + scoreText.Width, 31);
             e.Graphics.DrawImage(healthText, 12,12);

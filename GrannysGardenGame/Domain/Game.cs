@@ -61,7 +61,7 @@ namespace GrannysGardenGame.Domain
         {
             foreach(var item in field.weeds)
             {
-                if (curWeed.X == item.X && curWeed.Y == item.Y && curWeed.WeedState == item.WeedState)
+                if (curWeed.X == item.X && curWeed.Y == item.Y)
                     return field.weeds.IndexOf(item);
             }
             return -1;

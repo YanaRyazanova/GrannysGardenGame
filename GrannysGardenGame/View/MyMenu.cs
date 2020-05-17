@@ -25,29 +25,31 @@ namespace GrannysGardenGame.View
         public void InitializeComponent()
         {
             BackColor = Color.FromArgb(42, 212, 0);
-            MinimumSize = new Size(400, 720);
+            MinimumSize = new Size(420, 700);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Width = 360;
-            Height = 640;
+            Height = 400;
            
             var backLayer = new PictureBox 
             {
-                BackColor = Color.FromArgb(13, 0, 0, 0)
+                BackColor = Color.FromArgb(15, 0, 0, 0),
+                Width = 282,
+                Height = 700,
+                Location = new Point(60, 0)
             };
 
             logoImege = new PictureBox 
             {
                 Image = new Bitmap(@".\Images\NewLogo.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
-                Dock = DockStyle.Fill
+                Location = new Point(27, 2)
             };
 
             textBox = new PictureBox 
             {
-                Width = 312,
                 Image = new Bitmap(@".\Images\TextBoxNew.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
-                Dock = DockStyle.Fill
+                Location = new Point(60, 399)
             };
             
             newGameButton = new Button
@@ -55,7 +57,7 @@ namespace GrannysGardenGame.View
                 Width = 199,
                 Height = 65,
                 Image = new Bitmap(@".\Images\NewGameButton.png"),
-                Dock = DockStyle.None
+                Location = new Point(42, logoImege.Height + 13)
             };
             newGameButton.Click += (sender, args) => 
             {
@@ -70,7 +72,7 @@ namespace GrannysGardenGame.View
                 Width = 199,
                 Height = 65,
                 Image = new Bitmap(@".\Images\ContinueGameButton.png"),
-                Dock = DockStyle.None
+                Location = new Point(42, logoImege.Height + 13 * 2 + newGameButton.Height)
             };
             continueGameButton.Click += (sender, args) =>
             {
@@ -80,25 +82,11 @@ namespace GrannysGardenGame.View
                 this.Show();
             };
 
-            var table = new TableLayoutPanel();
-            table.RowStyles.Clear();
-            table.ColumnStyles.Clear();
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, logoImege.Height));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, newGameButton.Height));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, continueGameButton.Height));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, textBox.Height));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
-
-            table.Controls.Add(logoImege, 1, 0);
-            table.Controls.Add(newGameButton, 1, 1);
-            table.Controls.Add(continueGameButton, 1, 2);
-            table.Controls.Add(textBox, 1, 3);
-
-            table.Dock = DockStyle.Fill;
-
-            Controls.Add(table);
+            backLayer.Controls.Add(logoImege);
+            backLayer.Controls.Add(newGameButton);
+            backLayer.Controls.Add(continueGameButton);
+            Controls.Add(textBox);
+            Controls.Add(backLayer);
         }
     }
 }

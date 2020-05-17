@@ -35,9 +35,7 @@ namespace GrannysGardenGame.View
             
             //InitializeComponent();
             
-            timer.Interval = 90;
-            timer.Tick += TimerTick;
-            timer.Start();
+            
 
             var learnImage = new Bitmap(@".\Images\Learn.png");
             var toWinImage = new Bitmap(@".\Images\ToWin.png");
@@ -48,6 +46,7 @@ namespace GrannysGardenGame.View
                 Location = new Point(25, 200),
                 Image = learnImage
             };
+
             Controls.Add(learnBox);
             var toWinBox = new PictureBox
             {
@@ -86,7 +85,7 @@ namespace GrannysGardenGame.View
             var fieldImage = new Bitmap(@".\Images\Field.png");
 
             e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
-            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight, 70, 97);
+            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134, 70, 97);
             e.Graphics.FillRectangle(Brushes.Red, 
                 game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight + 134, cellWidth, cellHeight);
 
@@ -152,10 +151,10 @@ namespace GrannysGardenGame.View
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            if (Controls.Count > 1)
-                Controls.RemoveAt(0);
-            else
-                Controls.Clear();
+            timer.Interval = 80;
+            timer.Tick += TimerTick;
+            timer.Start();
+            Controls.Clear();
         }
 
         protected override CreateParams CreateParams

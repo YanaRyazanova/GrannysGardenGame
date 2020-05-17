@@ -32,7 +32,7 @@ namespace GrannysGardenGame.View
            
             var backLayer = new PictureBox 
             {
-                BackColor = Color.FromArgb(15, 0, 0, 0),
+                BackColor = Color.FromArgb(39, 196, 0),
                 Width = 282,
                 Height = 700,
                 Location = new Point(60, 0)
@@ -59,6 +59,7 @@ namespace GrannysGardenGame.View
                 Image = new Bitmap(@".\Images\NewGameButton.png"),
                 Location = new Point(42, logoImege.Height + 18)
             };
+
             newGameButton.Click += (sender, args) => 
             {
                 this.Hide();
@@ -74,6 +75,7 @@ namespace GrannysGardenGame.View
                 Image = new Bitmap(@".\Images\ContinueGameButton.png"),
                 Location = new Point(42, logoImege.Height + 13 * 2 + newGameButton.Height)
             };
+
             continueGameButton.Click += (sender, args) =>
             {
                 this.Hide();

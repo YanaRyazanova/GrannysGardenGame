@@ -24,6 +24,7 @@ namespace GrannysGardenGame.View
         {
             BackColor = Color.FromArgb(39, 196, 0);
             MinimumSize = new Size(420, 720);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Width = 360;
             Height = 400;
 

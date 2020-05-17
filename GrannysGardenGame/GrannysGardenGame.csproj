@@ -58,6 +58,18 @@
     <Compile Include="Domain\FieldCell.cs" />
     <Compile Include="Domain\FieldStates.cs" />
     <Compile Include="Domain\Game.cs" />
+    <Compile Include="View\BossLevel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\BossLevel.Designer.cs">
+      <DependentUpon>BossLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Level2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Level2.Designer.cs">
+      <DependentUpon>Level2.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\WinnerForm.cs">
       <SubType>Form</SubType>
     </Compile>

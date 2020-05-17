@@ -57,7 +57,7 @@ namespace GrannysGardenGame.View
                 Width = 199,
                 Height = 65,
                 Image = new Bitmap(@".\Images\NewGameButton.png"),
-                Location = new Point(42, logoImege.Height + 13)
+                Location = new Point(42, logoImege.Height + 18)
             };
             newGameButton.Click += (sender, args) => 
             {

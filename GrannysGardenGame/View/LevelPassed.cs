@@ -13,7 +13,7 @@ namespace GrannysGardenGame.View
     public partial class LevelPassed : Form
     {
         PictureBox textBox;
-        Button newGameButton;
+        Button continueGameButton;
         Button exitGameButton;
         public LevelPassed()
         {
@@ -22,34 +22,29 @@ namespace GrannysGardenGame.View
 
         public void InitializeComponent()
         {
-            BackColor = Color.FromArgb(42, 212, 0);
-            MinimumSize = new Size(440, 720);
+            BackColor = Color.FromArgb(39, 196, 0);
+            MinimumSize = new Size(420, 720);
             Width = 360;
-            Height = 640;
-
-            var backLayer = new PictureBox
-            {
-                BackColor = Color.FromArgb(13, 0, 0, 0)
-            };
-
+            Height = 400;
 
             textBox = new PictureBox
             {
-                Width = 340,
-                Height = 120,
-                Image = new Bitmap(@".\Images\LevelPassedShort.png"),
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                Dock = DockStyle.None
+                Image = new Bitmap(@".\Images\LevelPassed.png"),
+                SizeMode = PictureBoxSizeMode.AutoSize,
+                Location = new Point(28, 175)
             };
 
-            newGameButton = new Button
+            continueGameButton = new Button
             {
-                Width = 340,
+                Width = 200,
                 Height = 65,
                 Image = new Bitmap(@".\Images\PlayMore.png"),
-                Dock = DockStyle.None
+                Location = new Point(100, 285)
             };
-            newGameButton.Click += (sender, args) =>
+            
+            continueGameButton.BringToFront();
+            
+            continueGameButton.Click += (sender, args) =>
             {
                 this.Hide();
                 var gameForm = new GameForm();
@@ -59,11 +54,13 @@ namespace GrannysGardenGame.View
 
             exitGameButton = new Button
             {
-                Width = 340,
+                Width = 200,
                 Height = 65,
                 Image = new Bitmap(@".\Images\ExitGame.png"),
-                Dock = DockStyle.None
+                Location = new Point(100, continueGameButton.Location.Y + continueGameButton.Height + 10),
             };
+            
+            exitGameButton.BringToFront();
 
             exitGameButton.Click += (sender, args) =>
             {
@@ -73,25 +70,9 @@ namespace GrannysGardenGame.View
                 this.Show();
             };
 
-            var table = new TableLayoutPanel();
-            table.RowStyles.Clear();
-            table.ColumnStyles.Clear();
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, textBox.Height * 2));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, textBox.Height));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, newGameButton.Height));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, exitGameButton.Height));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
-
-            table.Controls.Add(textBox, 1, 1);
-            table.Controls.Add(newGameButton, 1, 2);
-            table.Controls.Add(exitGameButton, 1, 3);
-
-            table.Dock = DockStyle.Fill;
-
-            Controls.Add(table);
-
+            Controls.Add(continueGameButton);
+            Controls.Add(exitGameButton);
+            Controls.Add(textBox);
         }
     }
 }

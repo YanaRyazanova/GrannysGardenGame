@@ -82,19 +82,22 @@ namespace GrannysGardenGame.View
             var playerImage = new Bitmap(@".\Images\Player.png");
             var zombImage = new Bitmap(@".\Images\Zomb.png");
             var deadZomb = new Bitmap(@".\Images\DeadWeed.png");
-            var fieldImage = new Bitmap(@".\Images\Field.png");
+            var freezedZomb = new Bitmap(@".\Images\FreezedZomb.png");
+            var fieldImage = new Bitmap(@".\Images\FieldWithRedCell.png");
 
             e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
             e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134, 70, 97);
-            e.Graphics.FillRectangle(Brushes.Red, 
-                game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight + 134, cellWidth, cellHeight);
+            //e.Graphics.FillRectangle(Brushes.Red, 
+                //game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight + 134, cellWidth, cellHeight);
 
             foreach(var weed in game.field.weeds)
             {
-                if (weed.WeedState != WeedStates.Dead)
+                if (weed.WeedState == WeedStates.Alive)
                     e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight + 134);
                 if (weed.WeedState == WeedStates.Dead)
                     e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 134);
+                if (weed.WeedState == WeedStates.Freezed)
+                    e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth, weed.Y * cellHeight + 134, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
             }
 
             var bulletImage = new Bitmap(@".\Images\Bullet.png");
@@ -133,7 +136,7 @@ namespace GrannysGardenGame.View
                     game.DigUpWeed(new Weed(game.player.CurrentPos.X, game.player.CurrentPos.Y - 1));
                     break;
                 case Keys.A:
-                    game.FreezeWeed(new Weed(game.player.CurrentPos.X, game.player.CurrentPos.Y - 1));
+                    game.FreezeWeed(new Weed(game.player.CurrentPos.X, game.player.CurrentPos.Y));
                     break;
             };
 

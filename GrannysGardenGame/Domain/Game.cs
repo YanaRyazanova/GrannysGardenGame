@@ -69,9 +69,18 @@ namespace GrannysGardenGame.Domain
 
         public void FreezeWeed(Weed curWeed)
         {
-            var i = FindWeed(curWeed);
-            if (i != -1 && player.CurrentPos.X == curWeed.X && player.CurrentPos.Y - 1 == curWeed.Y)
-                field.weeds[i].WeedState = WeedStates.Freezed;
+            var incidentWeeds = new List<Weed>();
+            for (var x = -1; x <= 1; x++)
+                for (var y = -1; y <= 1; y++)
+                    if ((x == 0 || y == 0) && !(x == 0 && y == 0))
+                        incidentWeeds.Add(new Weed(curWeed.X + x, curWeed.Y + y));
+            foreach (var weed in incidentWeeds)
+            {
+                var i = FindWeed(weed);
+                if (i != -1)
+                    field.weeds[i].WeedState = WeedStates.Freezed;
+            }
+            
         }
     }
 }

@@ -22,33 +22,29 @@ namespace GrannysGardenGame.View
 
         public void InitializeComponent()
         {
-            BackColor = Color.FromArgb(42, 212, 0);
-            MinimumSize = new Size(440, 720);
+            BackColor = Color.FromArgb(39, 196, 0);
+            MinimumSize = new Size(420, 720);
             Width = 360;
-            Height = 640;
-
-            var backLayer = new PictureBox
-            {
-                BackColor = Color.FromArgb(13, 0, 0, 0)
-            };
+            Height = 400;
 
 
             textBox = new PictureBox
             {
-                Width = 340,
-                Height = 120,
-                Image = new Bitmap(@".\Images\Ur Killed Short.png"),
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                Dock = DockStyle.None
+                Image = new Bitmap(@".\Images\Ur Killed.png"),
+                SizeMode = PictureBoxSizeMode.AutoSize,
+                Location = new Point(28, 175)
             };
 
             newGameButton = new Button
             {
-                Width = 340,
+                Width = 200,
                 Height = 65,
                 Image = new Bitmap(@".\Images\PlayAgain.png"),
-                Dock = DockStyle.None
+                Location = new Point(100, 285)
             };
+            
+            newGameButton.BringToFront();
+            
             newGameButton.Click += (sender, args) =>
             {
                 this.Hide();
@@ -59,12 +55,14 @@ namespace GrannysGardenGame.View
 
             exitGameButton = new Button
             {
-                Width = 340,
+                Width = 200,
                 Height = 65,
                 Image = new Bitmap(@".\Images\ExitGame.png"),
-                Dock = DockStyle.None
+                Location = new Point(100, newGameButton.Location.Y + newGameButton.Height + 10),
             };
 
+            exitGameButton.BringToFront();
+            
             exitGameButton.Click += (sender, args) =>
             {
                 this.Hide();
@@ -73,24 +71,9 @@ namespace GrannysGardenGame.View
                 this.Show();
             };
 
-            var table = new TableLayoutPanel();
-            table.RowStyles.Clear();
-            table.ColumnStyles.Clear();
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, textBox.Height * 2));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, textBox.Height));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, newGameButton.Height));
-            table.RowStyles.Add(new RowStyle(SizeType.Absolute, exitGameButton.Height));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
-
-            table.Controls.Add(textBox, 1, 1);
-            table.Controls.Add(newGameButton, 1, 2);
-            table.Controls.Add(exitGameButton, 1, 3);
-
-            table.Dock = DockStyle.Fill;
-
-            Controls.Add(table);
+            Controls.Add(newGameButton);
+            Controls.Add(exitGameButton);
+            Controls.Add(textBox);
 
         }
     }

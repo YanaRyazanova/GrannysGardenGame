@@ -47,8 +47,8 @@ namespace GrannysGardenGame.View
             
             continueGameButton.Click += (sender, args) =>
             {
-                this.Hide();
-                var gameForm = new GameForm();
+                this.Close();
+                var gameForm = new Level2();
                 gameForm.ShowDialog();
                 this.Show();
             };

@@ -29,14 +29,12 @@ namespace GrannysGardenGame.View
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Width = 360;
             Height = 640;
-            game = CreateLevel1();
+            game = ChangeLevel(CreateLevel());
             
             GenerateBullets();
             
             //InitializeComponent();
             
-            
-
             var learnImage = new Bitmap(@".\Images\Learn.png");
             var toWinImage = new Bitmap(@".\Images\ToWin.png");
             var zaBabkuIPomidoryImage = new Bitmap(@".\Images\ZaBabku.png");
@@ -169,7 +167,7 @@ namespace GrannysGardenGame.View
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            timer.Interval = 80;
+            timer.Interval = 50;
             timer.Tick += TimerTick;
             timer.Start();
             Controls.Clear();
@@ -243,6 +241,8 @@ namespace GrannysGardenGame.View
         {
             if (game.GameState == GameStates.Win)
             {
+                game.level++;
+                ChangeLevel(game);
                 timer.Stop();
                 this.Hide();
                 var winWindow = new LevelPassed();
@@ -251,6 +251,7 @@ namespace GrannysGardenGame.View
             }
             if (game.GameState == GameStates.Lose)
             {
+                ChangeLevel(game);
                 timer.Stop();
                 this.Hide();
                 var winWindow = new LoseForm();
@@ -295,9 +296,32 @@ namespace GrannysGardenGame.View
             }
         }
 
-        public Game CreateLevel1() 
+        public Game CreateLevel() 
         {
-            var textField = new[] 
+            var textField = level1;
+            var field = Field.FromLines(textField);
+            var player = new Player(field.initialCell);
+            game = new Game(player, field);
+            return game;
+        }
+
+        public Game ChangeLevel(Game game) 
+        {
+            if (game.level == 1) 
+            {
+                var field = Field.FromLines(level1);
+                return new Game(new Player(field.initialCell), field);
+            }
+            if (game.level == 2)
+            {
+                var field = Field.FromLines(level2);
+                return new Game(new Player(field.initialCell), field);
+            }
+            else 
+                return game;
+        }
+
+        string[] level1 = new[] 
             {
                 "W#@#W",
                 "##W#W",
@@ -309,10 +333,17 @@ namespace GrannysGardenGame.View
                 "W#W##",
                 "####P"
             };
-            var field = Field.FromLines(textField);
-            var player = new Player(field.initialCell);
-            game = new Game(player, field);
-            return game;
-        }
+        string[] level2 = new[] 
+            {
+                "WW@WW",
+                "##W#W",
+                "#W###",
+                "W##W#",
+                "WWWWW",
+                "WWWWW",
+                "WWWWW",
+                "W#W##",
+                "####P"
+            };
     }
 }

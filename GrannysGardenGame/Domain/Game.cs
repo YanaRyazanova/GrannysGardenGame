@@ -18,6 +18,7 @@ namespace GrannysGardenGame.Domain
         //public static HashSet<Keys> KeyPressed;
         public Player player;
         public  Field field;
+        public int level;
         
         public GameStates GameState;
 
@@ -27,6 +28,7 @@ namespace GrannysGardenGame.Domain
             player = playerConst;
             field = fieldConst;
             GameState = GameStates.Active;
+            level = 1;
         }
         public int Level { get; set; }
         public int GetWigth => field.Width;

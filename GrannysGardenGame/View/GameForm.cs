@@ -29,7 +29,7 @@ namespace GrannysGardenGame.View
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Width = 360;
             Height = 640;
-            game = ChangeLevel(CreateLevel());
+            game = CreateLevel(); //ChangeLevel(CreateLevel())
             
             GenerateBullets();
             
@@ -245,7 +245,7 @@ namespace GrannysGardenGame.View
                 ChangeLevel(game);
                 timer.Stop();
                 this.Hide();
-                var winWindow = new LevelPassed();
+                var winWindow = new Level1Passed();
                 winWindow.ShowDialog();
                 this.Close();
             }
@@ -254,7 +254,7 @@ namespace GrannysGardenGame.View
                 ChangeLevel(game);
                 timer.Stop();
                 this.Hide();
-                var winWindow = new LoseForm();
+                var winWindow = new LoseForm(game);
                 winWindow.ShowDialog();
                 this.Close();
             }
@@ -317,8 +317,7 @@ namespace GrannysGardenGame.View
                 var field = Field.FromLines(level2);
                 return new Game(new Player(field.initialCell), field);
             }
-            else 
-                return game;
+            return game;
         }
 
         string[] level1 = new[] 
@@ -327,10 +326,7 @@ namespace GrannysGardenGame.View
                 "W#W##",
                 "#W##W",
                 "WW#W#",
-                //"#####",
                 "W#W##",
-                //"#####",
-                //"W#W##",
                 "####P"
             };
         string[] level2 = new[] 

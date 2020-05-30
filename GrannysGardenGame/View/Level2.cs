@@ -19,8 +19,8 @@ namespace GrannysGardenGame.View
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         List<Bullet> bullets = new List<Bullet>();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        int cellWidth = 78;
-        int cellHeight = 54;
+        int cellWidth = 75;
+        int cellHeight = 64;
 
         public Level2()
         {
@@ -96,21 +96,21 @@ namespace GrannysGardenGame.View
             var zombImage = new Bitmap(@".\Images\Zomb.png");
             var deadZomb = new Bitmap(@".\Images\DeadWeed.png");
             var freezedZomb = new Bitmap(@".\Images\FreezedZomb.png");
-            var fieldImage = new Bitmap(@".\Images\FieldWithRedCell.png");
+            var fieldImage = new Bitmap(@".\Images\Level2Field.png");
 
             e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
-            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134, 70, 97);
+            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth + 4, game.player.CurrentPos.Y * cellHeight + 104, 70, 97);
             //e.Graphics.FillRectangle(Brushes.Red, 
             //game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight + 134, cellWidth, cellHeight);
 
             foreach (var weed in game.field.weeds)
             {
                 if (weed.WeedState == WeedStates.Alive)
-                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight + 134);
+                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth + 6, weed.Y * cellHeight + 124);
                 if (weed.WeedState == WeedStates.Dead)
-                    e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 134);
+                    e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 124);
                 if (weed.WeedState == WeedStates.Freezed)
-                    e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth, weed.Y * cellHeight + 134, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
+                    e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth + 6, weed.Y * cellHeight + 124, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
             }
 
             var bulletImage = new Bitmap(@".\Images\Bullet.png");
@@ -118,7 +118,7 @@ namespace GrannysGardenGame.View
             foreach (var bullet in bullets)
             {
                 if (bullet.state == BulletState.Exist)
-                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth, bullet.Y * cellHeight - 40 + 134, 30, 30);
+                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 60 + 134, 30, 30);
             }
         }
 
@@ -244,7 +244,7 @@ namespace GrannysGardenGame.View
                 game.level++;
                 timer.Stop();
                 this.Hide();
-                var winWindow = new LevelPassed();
+                var winWindow = new Level2Passed();
                 winWindow.ShowDialog();
                 this.Close();
             }
@@ -252,7 +252,7 @@ namespace GrannysGardenGame.View
             {
                 timer.Stop();
                 this.Hide();
-                var winWindow = new LoseForm();
+                var winWindow = new LoseForm(game);
                 winWindow.ShowDialog();
                 this.Close();
             }
@@ -300,6 +300,7 @@ namespace GrannysGardenGame.View
             var field = Field.FromLines(textField);
             var player = new Player(field.initialCell);
             game = new Game(player, field);
+            game.level = 2;
             return game;
         }
 
@@ -311,7 +312,7 @@ namespace GrannysGardenGame.View
                 "W##W#",
                 "WWWWW",
                 "WWWWW",
-                "WWWWW",
+                //"WWWWW",
                 "W#W##",
                 "####P"
             };

@@ -47,7 +47,7 @@ namespace GrannysGardenGame.View
 
             textBox = new PictureBox 
             {
-                Image = new Bitmap(@".\Images\TextBoxNewMargo.png"),
+                Image = new Bitmap(@".\Images\TextBoxNew.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Location = new Point(60, 399)
             };

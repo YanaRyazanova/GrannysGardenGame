@@ -58,6 +58,15 @@
     <Compile Include="Domain\FieldCell.cs" />
     <Compile Include="Domain\FieldStates.cs" />
     <Compile Include="Domain\Game.cs" />
+    <Compile Include="View\BossLevel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\BossLevel.Designer.cs">
+      <DependentUpon>BossLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Level2Passed.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="View\Level2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,7 +76,7 @@
     <Compile Include="View\WinnerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\LevelPassed.cs">
+    <Compile Include="View\Level1Passed.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\LoseForm.cs">
@@ -177,6 +186,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\NewField.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Level2Field.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\NewGameButton.png">

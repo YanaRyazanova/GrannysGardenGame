@@ -7,15 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GrannysGardenGame.Domain;
 
 namespace GrannysGardenGame.View
 {
-    public partial class LevelPassed : Form
+    public partial class Level1Passed : Form
     {
         PictureBox textBox;
         Button continueGameButton;
         Button exitGameButton;
-        public LevelPassed()
+        public Level1Passed()
         {
             InitializeComponent();
         }
@@ -30,7 +31,7 @@ namespace GrannysGardenGame.View
 
             textBox = new PictureBox
             {
-                Image = new Bitmap(@".\Images\LevelPassed.png"),
+                Image = new Bitmap(@".\Images\Level1Passed.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Location = new Point(28, 175)
             };
@@ -47,7 +48,7 @@ namespace GrannysGardenGame.View
             
             continueGameButton.Click += (sender, args) =>
             {
-                this.Close();
+                this.Hide();
                 var gameForm = new Level2();
                 gameForm.ShowDialog();
                 this.Close();

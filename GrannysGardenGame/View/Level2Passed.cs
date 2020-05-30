@@ -7,23 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GrannysGardenGame.Domain;
 
 namespace GrannysGardenGame.View
 {
-    public partial class LoseForm : Form
+    public partial class Level2Passed : Form
     {
         PictureBox textBox;
-        Button newGameButton;
+        Button continueGameButton;
         Button exitGameButton;
-        public Game Game;
-        public LoseForm(Game game)
+        public Level2Passed()
         {
-            Game = game;
-            InitializeComponent(Game);
+            InitializeComponent();
         }
 
-        public void InitializeComponent(Game game)
+        public void InitializeComponent()
         {
             BackColor = Color.FromArgb(39, 196, 0);
             MinimumSize = new Size(420, 720);
@@ -31,34 +28,27 @@ namespace GrannysGardenGame.View
             Width = 360;
             Height = 400;
 
-
             textBox = new PictureBox
             {
-                Image = new Bitmap(@".\Images\Ur Killed.png"),
+                Image = new Bitmap(@".\Images\Level2Passed.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Location = new Point(28, 175)
             };
 
-            newGameButton = new Button
+            continueGameButton = new Button
             {
                 Width = 200,
                 Height = 65,
-                Image = new Bitmap(@".\Images\PlayAgain.png"),
+                Image = new Bitmap(@".\Images\PlayMore.png"),
                 Location = new Point(100, 285)
             };
-            
-            newGameButton.BringToFront();
-            
-            newGameButton.Click += (sender, args) =>
+
+            continueGameButton.BringToFront();
+
+            continueGameButton.Click += (sender, args) =>
             {
                 this.Hide();
-                var gameForm = new Form();
-                if (game.level == 1)
-                    gameForm = new GameForm();
-                else if (game.level == 2)
-                    gameForm = new Level2();
-                else 
-                    gameForm = new BossLevel();
+                var gameForm = new Level2();
                 gameForm.ShowDialog();
                 this.Close();
             };
@@ -68,11 +58,11 @@ namespace GrannysGardenGame.View
                 Width = 200,
                 Height = 65,
                 Image = new Bitmap(@".\Images\ExitGame.png"),
-                Location = new Point(100, newGameButton.Location.Y + newGameButton.Height + 10),
+                Location = new Point(100, continueGameButton.Location.Y + continueGameButton.Height + 10),
             };
 
             exitGameButton.BringToFront();
-            
+
             exitGameButton.Click += (sender, args) =>
             {
                 this.Hide();
@@ -81,10 +71,9 @@ namespace GrannysGardenGame.View
                 this.Close();
             };
 
-            Controls.Add(newGameButton);
+            Controls.Add(continueGameButton);
             Controls.Add(exitGameButton);
             Controls.Add(textBox);
-
         }
     }
 }

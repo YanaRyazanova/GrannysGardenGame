@@ -32,7 +32,7 @@ namespace GrannysGardenGame.View
            
             var backLayer = new PictureBox 
             {
-                BackColor = Color.FromArgb(39, 196, 0),
+                BackColor = Color.FromArgb(37, 189, 0),
                 Width = 282,
                 Height = 700,
                 Location = new Point(60, 0)
@@ -47,7 +47,7 @@ namespace GrannysGardenGame.View
 
             textBox = new PictureBox 
             {
-                Image = new Bitmap(@".\Images\TextBoxNew.png"),
+                Image = new Bitmap(@".\Images\TextBoxNewMargo.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Location = new Point(60, 399)
             };

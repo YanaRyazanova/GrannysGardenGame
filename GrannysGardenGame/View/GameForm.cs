@@ -19,8 +19,8 @@ namespace GrannysGardenGame.View
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         List<Bullet> bullets = new List<Bullet>();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        int cellWidth = 78;
-        int cellHeight = 54;
+        int cellWidth = 75;//78
+        int cellHeight = 85;//54
 
         public GameForm()
         {
@@ -30,7 +30,7 @@ namespace GrannysGardenGame.View
             Width = 360;
             Height = 640;
             game = CreateLevel1();
-            
+
             GenerateBullets();
             
             //InitializeComponent();
@@ -54,7 +54,7 @@ namespace GrannysGardenGame.View
             {
                 Width = 145,
                 Height = 100,
-                Location = new Point(120, 40),
+                Location = new Point(115, 34),
                 Image = toWinImage
             };
             
@@ -64,7 +64,7 @@ namespace GrannysGardenGame.View
             {
                 Width = 144,
                 Height = 75,
-                Location = new Point(230, 490),
+                Location = new Point(220, 480),
                 Image = zaBabkuIPomidoryImage
             };
 
@@ -101,18 +101,18 @@ namespace GrannysGardenGame.View
             var fieldImage = new Bitmap(@".\Images\FieldWithRedCell.png");
 
             e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
-            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134, 70, 97);
+            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134f, 70, 93);
             //e.Graphics.FillRectangle(Brushes.Red, 
                 //game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight + 134, cellWidth, cellHeight);
 
             foreach(var weed in game.field.weeds)
             {
                 if (weed.WeedState == WeedStates.Alive)
-                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth, weed.Y * cellHeight + 134);
+                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth + 5, weed.Y * cellHeight + 134);
                 if (weed.WeedState == WeedStates.Dead)
                     e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 134);
                 if (weed.WeedState == WeedStates.Freezed)
-                    e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth, weed.Y * cellHeight + 134, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
+                    e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth + 5, weed.Y * cellHeight + 134, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
             }
 
             var bulletImage = new Bitmap(@".\Images\Bullet.png");
@@ -120,7 +120,7 @@ namespace GrannysGardenGame.View
             foreach(var bullet in bullets) 
             {
                 if (bullet.state == BulletState.Exist)
-                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth, bullet.Y * cellHeight - 40 + 134, 30, 30);
+                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 21, bullet.Y * cellHeight - 40 + 114, 30, 30);
             }
         }
 
@@ -169,7 +169,7 @@ namespace GrannysGardenGame.View
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            timer.Interval = 80;
+            timer.Interval = 10;
             timer.Tick += TimerTick;
             timer.Start();
             Controls.Clear();
@@ -299,14 +299,14 @@ namespace GrannysGardenGame.View
         {
             var textField = new[] 
             {
-                "W#@#W",
-                "##W#W",
-                "#W###",
-                "W##W#",
-                "#####",
-                "##W##",
-                "#####",
+                "W#@WW",
                 "W#W##",
+                "#W##W",
+                "WW#W#",
+                //"#####",
+                "W#W##",
+                //"#####",
+                //"W#W##",
                 "####P"
             };
             var field = Field.FromLines(textField);

@@ -50,7 +50,7 @@ namespace GrannysGardenGame.View
                 this.Hide();
                 var gameForm = new GameForm();
                 gameForm.ShowDialog();
-                this.Show();
+                this.Close();
             };
 
             exitGameButton = new Button
@@ -68,7 +68,7 @@ namespace GrannysGardenGame.View
                 this.Hide();
                 var myMenu = new MyMenu();
                 myMenu.ShowDialog();
-                this.Show();
+                this.Close();
             };
 
             Controls.Add(continueGameButton);

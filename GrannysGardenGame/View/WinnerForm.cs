@@ -49,7 +49,7 @@ namespace GrannysGardenGame.View
                 this.Hide();
                 var myMenu = new MyMenu();
                 myMenu.ShowDialog();
-                this.Show();
+                this.Close();
             };
 
             Controls.Add(exitGameButton);

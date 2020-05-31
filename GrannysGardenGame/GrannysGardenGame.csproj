@@ -188,7 +188,7 @@
     <Content Include="Images\LevelPassed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\NewField.png">
+    <Content Include="Images\Boss Learn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Level2Field.png">

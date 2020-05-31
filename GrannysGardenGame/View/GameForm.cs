@@ -33,7 +33,7 @@ namespace GrannysGardenGame.View
         Bitmap healthText = new Bitmap(@".\Images\HealthText.png");
         Bitmap scoreText = new Bitmap(@".\Images\ScoreTextpng.png");
         Bitmap bulletImage = new Bitmap(@".\Images\Bullet.png");
-        Bitmap learnImage = new Bitmap(@".\Images\Learn.png");
+        Bitmap learnImage = new Bitmap(@".\Images\LearnNew.png");
         Bitmap toWinImage = new Bitmap(@".\Images\ToWin.png");
         Bitmap zaBabkuIPomidoryImage = new Bitmap(@".\Images\ZaBabku.png");
 
@@ -53,7 +53,7 @@ namespace GrannysGardenGame.View
             var learnBox = new PictureBox
             {
                 Width = 316,
-                Height = 201,
+                Height = 265,
                 Location = new Point(25, 200),
                 Image = learnImage
             };
@@ -62,9 +62,9 @@ namespace GrannysGardenGame.View
             
             var toWinBox = new PictureBox
             {
-                Width = 145,
-                Height = 100,
-                Location = new Point(115, 34),
+                Width = 154,
+                Height = 112,
+                Location = new Point(12, 20),
                 Image = toWinImage
             };
             

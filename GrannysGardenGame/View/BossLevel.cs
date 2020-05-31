@@ -30,8 +30,7 @@ namespace GrannysGardenGame.View
         Bitmap healthText = new Bitmap(@".\Images\HealthText.png");
         Bitmap scoreText = new Bitmap(@".\Images\ScoreTextpng.png");
         Bitmap bulletImage = new Bitmap(@".\Images\Bullet.png");
-        Bitmap learnImage = new Bitmap(@".\Images\Learn.png");
-        Bitmap toWinImage = new Bitmap(@".\Images\ToWin.png");
+        Bitmap learnImage = new Bitmap(@".\Images\Boss Learn.png");
         Bitmap zaBabkuIPomidoryImage = new Bitmap(@".\Images\ZaBabku.png");
 
         public BossLevel()
@@ -50,28 +49,18 @@ namespace GrannysGardenGame.View
             var learnBox = new PictureBox
             {
                 Width = 316,
-                Height = 201,
-                Location = new Point(25, 200),
+                Height = 284,
+                Location = new Point(27, 180),
                 Image = learnImage
             };
 
             Controls.Add(learnBox);
             
-            var toWinBox = new PictureBox
-            {
-                Width = 145,
-                Height = 100,
-                Location = new Point(115, 34),
-                Image = toWinImage
-            };
-            
-            Controls.Add(toWinBox);
-
             var zaBabkuBox = new PictureBox
             {
                 Width = 144,
                 Height = 75,
-                Location = new Point(220, 480),
+                Location = new Point(75, 480),
                 Image = zaBabkuIPomidoryImage
             };
 
@@ -352,8 +341,8 @@ namespace GrannysGardenGame.View
                 "W###W",
                 "#####",
                 "##W##",
-                "#####",
-                "W#P#W"
+                "W###W",
+                "##P##"
             };
     }
 }

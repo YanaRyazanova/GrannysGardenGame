@@ -48,26 +48,6 @@ namespace GrannysGardenGame.View
 
             //InitializeComponent();
 
-            var learnBox = new PictureBox
-            {
-                Width = 316,
-                Height = 201,
-                Location = new Point(25, 200),
-                Image = learnImage
-            };
-
-            Controls.Add(learnBox);
-
-            var toWinBox = new PictureBox
-            {
-                Width = 145,
-                Height = 100,
-                Location = new Point(120, 40),
-                Image = toWinImage
-            };
-
-            Controls.Add(toWinBox);
-
             var zaBabkuBox = new PictureBox
             {
                 Width = 144,
@@ -301,13 +281,13 @@ namespace GrannysGardenGame.View
 
         string[] level2 = new[]
             {
-                "@W#WW",
-                "##W#W",
-                "#W###",
-                "W##W#",
-                "WWWWW",
-                "WWWWW",
-                "W#W##",
+                "@W###",
+                "W####",
+                "##W##",
+                "#W#W#",
+                "#####",
+                "#W#W#",
+                "W###W",
                 "####P"
             };
     }

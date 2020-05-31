@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace GrannysGardenGame.View
 {
-    public partial class Level2Passed : Form
+    public partial class Win : Form
     {
         PictureBox textBox;
         Button continueGameButton;
         Button exitGameButton;
-        public Level2Passed()
+
+        public Win()
         {
             InitializeComponent();
         }
@@ -30,27 +31,9 @@ namespace GrannysGardenGame.View
 
             textBox = new PictureBox
             {
-                Image = new Bitmap(@".\Images\Level2Passed.png"),
+                Image = new Bitmap(@".\Images\U Won.png"),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Location = new Point(28, 175)
-            };
-
-            continueGameButton = new Button
-            {
-                Width = 200,
-                Height = 65,
-                Image = new Bitmap(@".\Images\PlayMore.png"),
-                Location = new Point(100, 285)
-            };
-
-            continueGameButton.BringToFront();
-
-            continueGameButton.Click += (sender, args) =>
-            {
-                this.Hide();
-                var gameForm = new BossLevel();
-                gameForm.ShowDialog();
-                this.Close();
             };
 
             exitGameButton = new Button

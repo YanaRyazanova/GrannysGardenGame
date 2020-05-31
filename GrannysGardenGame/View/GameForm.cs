@@ -318,11 +318,11 @@ namespace GrannysGardenGame.View
 
         string[] level1 = new[] 
             {
-                "@W#WW",
-                "W#W##",
-                "#W##W",
-                "WW#W#",
-                "W#W##",
+                "@W##W",
+                "W###W",
+                "#W###",
+                "##W#W",
+                "W##W#",
                 "####P"
             };
         string[] level2 = new[] 

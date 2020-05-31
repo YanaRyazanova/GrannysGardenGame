@@ -167,7 +167,7 @@ namespace GrannysGardenGame.View
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            timer.Interval = 10;
+            timer.Interval = 1;
             timer.Tick += TimerTick;
             timer.Start();
             Controls.Clear();
@@ -331,14 +331,11 @@ namespace GrannysGardenGame.View
             };
         string[] level2 = new[] 
             {
-                "WW@WW",
-                "##W#W",
-                "#W###",
-                "W##W#",
+                "@WWWW",
+                "W#WWW",
+                "WW#WW",
                 "WWWWW",
                 "WWWWW",
-                "WWWWW",
-                "W#W##",
                 "####P"
             };
     }

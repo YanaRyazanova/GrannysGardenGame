@@ -9,9 +9,9 @@ namespace GrannysGardenGame
 {
     public class SinglyLinkedList<T> : IEnumerable<T>
     {
-        public readonly T Value;
-        public readonly SinglyLinkedList<T> Previous;
-        public readonly int Length;
+        public T Value;
+        public SinglyLinkedList<T> Previous;
+        public int Length;
 
         public SinglyLinkedList(T value, SinglyLinkedList<T> previous = null)
         {

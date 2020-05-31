@@ -312,7 +312,6 @@ namespace GrannysGardenGame.View
                 "W##W#",
                 "WWWWW",
                 "WWWWW",
-                //"WWWWW",
                 "W#W##",
                 "####P"
             };

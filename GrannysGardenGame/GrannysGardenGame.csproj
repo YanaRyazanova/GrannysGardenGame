@@ -176,6 +176,9 @@
     <Content Include="Images\Learn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\LearnNew.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Level1Passed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

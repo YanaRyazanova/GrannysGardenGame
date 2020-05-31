@@ -8,7 +8,9 @@ using GrannysGardenGame.Domain;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels;
 using System.Threading;
+using Timer = System.Windows.Forms.Timer;
 
 namespace GrannysGardenGame.View
 {
@@ -18,7 +20,7 @@ namespace GrannysGardenGame.View
         private readonly HashSet<Keys> pressedKeys = new HashSet<Keys>();
         private readonly Dictionary<string, Bitmap> bitmaps = new Dictionary<string, Bitmap>();
         List<Bullet> bullets = new List<Bullet>();
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        Timer timer = new Timer();
         int cellWidth = 75;//78
         int cellHeight = 85;//54
         Bitmap playerImage = new Bitmap(@".\Images\Player.png");
@@ -77,30 +79,30 @@ namespace GrannysGardenGame.View
             };
 
             Controls.Add(zaBabkuBox);
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            PaintDecorations(e);
+            PaintWeeds(e);
+            PaintBullets(e);
+            //Thread.Sleep(Timeout.Infinite);
             base.OnPaint(e);
+        }
 
-            
-            var h = game.player.Health;
-            var s = game.player.Scores;
-            var health = new Rectangle(new Point(42 + healthText.Width, 14), new Size((675 * h) / 100, 12));
-            var health2 = new Rectangle(new Point(40 + healthText.Width, 12), new Size(139, 16));
-
-            e.Graphics.FillRectangle(Brushes.LightGreen, 0, 0, 390, 70);
-            e.Graphics.FillRectangle(Brushes.Black, health2);
-            e.Graphics.FillRectangle(Brushes.Red, health);
-            e.Graphics.DrawString(s.ToString(), new Font(new FontFamily("Segoe UI Symbol"), 18, FontStyle.Bold), Brushes.Black, 40 + scoreText.Width, 31);
-            e.Graphics.DrawImage(healthText, 12,12);
-            e.Graphics.DrawImage(scoreText, 12, 41);
-            e.Graphics.DrawImage(grannysImage, 50, 60, 64, 79);
-            e.Graphics.DrawImage(houseImage, 210, 0, 150, 140);
-            e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
-            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134f, 70, 93);
-
-            foreach(var weed in game.field.weeds)
+        public void PaintBullets(PaintEventArgs e)
+        {
+            foreach(var bullet in bullets) 
+            {
+                if (bullet.state == BulletState.Exist)
+                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 21, bullet.Y * cellHeight - 40 + 114, 30, 30);
+            }
+        }
+        
+        public void PaintWeeds(PaintEventArgs e)
+        {
+            foreach (var weed in game.field.weeds)
             {
                 if (weed.WeedState == WeedStates.Alive)
                     e.Graphics.DrawImage(zombImage, weed.X * cellWidth + 5, weed.Y * cellHeight + 134);
@@ -109,12 +111,24 @@ namespace GrannysGardenGame.View
                 if (weed.WeedState == WeedStates.Freezed)
                     e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth + 5, weed.Y * cellHeight + 134, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
             }
+        }
 
-            foreach(var bullet in bullets) 
-            {
-                if (bullet.state == BulletState.Exist)
-                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 21, bullet.Y * cellHeight - 40 + 114, 30, 30);
-            }
+        public void PaintDecorations(PaintEventArgs e)
+        {
+            var h = game.player.Health;
+            var s = game.player.Scores;
+            var health = new Rectangle(new Point(42 + healthText.Width, 14), new Size((675 * h) / 100, 12));
+            var health2 = new Rectangle(new Point(40 + healthText.Width, 12), new Size(139, 16));
+            e.Graphics.FillRectangle(Brushes.LightGreen, 0, 0, 390, 70);
+            e.Graphics.FillRectangle(Brushes.Black, health2);
+            e.Graphics.FillRectangle(Brushes.Red, health);
+            e.Graphics.DrawString(s.ToString(), new Font(new FontFamily("Segoe UI Symbol"), 18, FontStyle.Bold), Brushes.Black, 40 + scoreText.Width, 31);
+            e.Graphics.DrawImage(healthText, 12, 12);
+            e.Graphics.DrawImage(scoreText, 12, 41);
+            e.Graphics.DrawImage(grannysImage, 50, 60, 64, 79);
+            e.Graphics.DrawImage(houseImage, 210, 0, 150, 140);
+            e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
+            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134f, 70, 93);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -164,8 +178,14 @@ namespace GrannysGardenGame.View
             base.OnMouseDown(e);
             timer.Interval = 10;
             timer.Tick += TimerTick;
+            if (!timer.Enabled)
+            {
+                Controls.RemoveAt(0);
+                Controls.RemoveAt(0);
+                Controls.RemoveAt(0);
+            }
             timer.Start();
-            Controls.Clear();
+            
         }
 
         protected override CreateParams CreateParams
@@ -261,7 +281,6 @@ namespace GrannysGardenGame.View
             {
                 bullet.DeadInConflict(game.field, game.player);
                 bullet.MoveBullet();
-                
             }
         }
 
@@ -318,11 +337,11 @@ namespace GrannysGardenGame.View
 
         string[] level1 = new[] 
             {
-                "@W#WW",
-                "W#W##",
-                "#W##W",
-                "WW#W#",
-                "W#W##",
+                "@W##W",
+                "W###W",
+                "#W###",
+                "##W#W",
+                "W##W#",
                 "####P"
             };
         string[] level2 = new[] 

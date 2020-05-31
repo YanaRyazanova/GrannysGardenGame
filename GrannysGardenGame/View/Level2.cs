@@ -20,7 +20,7 @@ namespace GrannysGardenGame.View
         List<Bullet> bullets = new List<Bullet>();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         int cellWidth = 75;
-        int cellHeight = 64;
+        int cellHeight = 85;
         Bitmap houseImage = new Bitmap(@".\Images\House.png");
         Bitmap grannysImage = new Bitmap(@".\Images\Granny.png");
         Bitmap healthText = new Bitmap(@".\Images\HealthText.png");
@@ -29,7 +29,7 @@ namespace GrannysGardenGame.View
         Bitmap zombImage = new Bitmap(@".\Images\Zomb.png");
         Bitmap deadZomb = new Bitmap(@".\Images\DeadWeed.png");
         Bitmap freezedZomb = new Bitmap(@".\Images\FreezedZomb.png");
-        Bitmap fieldImage = new Bitmap(@".\Images\Level2Field.png");
+        Bitmap fieldImage = new Bitmap(@".\Images\FieldWithRedCell.png");
         Bitmap bulletImage = new Bitmap(@".\Images\Bullet.png");
         Bitmap learnImage = new Bitmap(@".\Images\Learn.png");
         Bitmap toWinImage = new Bitmap(@".\Images\ToWin.png");
@@ -82,13 +82,41 @@ namespace GrannysGardenGame.View
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            PaintDecorations(e);
+            PaintWeeds(e);
+            PaintBullets(e);
+            //Thread.Sleep(Timeout.Infinite);
+            base.OnPaint(e);
+        }
 
-            
+        public void PaintBullets(PaintEventArgs e)
+        {
+            foreach (var bullet in bullets)
+            {
+                if (bullet.state == BulletState.Exist)
+                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 21, bullet.Y * cellHeight - 40 + 114, 30, 30);
+            }
+        }
+
+        public void PaintWeeds(PaintEventArgs e)
+        {
+            foreach (var weed in game.field.weeds)
+            {
+                if (weed.WeedState == WeedStates.Alive)
+                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth + 5, weed.Y * cellHeight + 134);
+                if (weed.WeedState == WeedStates.Dead)
+                    e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 134);
+                if (weed.WeedState == WeedStates.Freezed)
+                    e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth + 5, weed.Y * cellHeight + 134, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
+            }
+        }
+
+        public void PaintDecorations(PaintEventArgs e)
+        {
             var h = game.player.Health;
             var s = game.player.Scores;
             var health = new Rectangle(new Point(42 + healthText.Width, 14), new Size((675 * h) / 100, 12));
             var health2 = new Rectangle(new Point(40 + healthText.Width, 12), new Size(139, 16));
-
             e.Graphics.FillRectangle(Brushes.LightGreen, 0, 0, 390, 70);
             e.Graphics.FillRectangle(Brushes.Black, health2);
             e.Graphics.FillRectangle(Brushes.Red, health);
@@ -98,23 +126,7 @@ namespace GrannysGardenGame.View
             e.Graphics.DrawImage(grannysImage, 50, 60, 64, 79);
             e.Graphics.DrawImage(houseImage, 210, 0, 150, 140);
             e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
-            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth + 4, game.player.CurrentPos.Y * cellHeight + 104, 70, 97);
-
-            foreach (var weed in game.field.weeds)
-            {
-                if (weed.WeedState == WeedStates.Alive)
-                    e.Graphics.DrawImage(zombImage, weed.X * cellWidth + 6, weed.Y * cellHeight + 124);
-                if (weed.WeedState == WeedStates.Dead)
-                    e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 124);
-                if (weed.WeedState == WeedStates.Freezed)
-                    e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth + 6, weed.Y * cellHeight + 124, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
-            }
-
-            foreach (var bullet in bullets)
-            {
-                if (bullet.state == BulletState.Exist)
-                    e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 25, bullet.Y * cellHeight - 60 + 134, 30, 30);
-            }
+            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134f, 70, 93);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -301,14 +313,11 @@ namespace GrannysGardenGame.View
 
         string[] level2 = new[]
             {
-                "@W#WW",
-                "##W#W",
-                "#W###",
+                "@W##W",
                 "W##W#",
-                "WWWWW",
-                "WWWWW",
-                //"WWWWW",
-                "W#W##",
+                "#WW#W",
+                "#W#W#",
+                "W#W#W",
                 "####P"
             };
     }

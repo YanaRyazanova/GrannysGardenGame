@@ -21,6 +21,19 @@ namespace GrannysGardenGame.View
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         int cellWidth = 75;
         int cellHeight = 64;
+        Bitmap houseImage = new Bitmap(@".\Images\House.png");
+        Bitmap grannysImage = new Bitmap(@".\Images\Granny.png");
+        Bitmap healthText = new Bitmap(@".\Images\HealthText.png");
+        Bitmap scoreText = new Bitmap(@".\Images\ScoreTextpng.png");
+        Bitmap playerImage = new Bitmap(@".\Images\Player.png");
+        Bitmap zombImage = new Bitmap(@".\Images\Zomb.png");
+        Bitmap deadZomb = new Bitmap(@".\Images\DeadWeed.png");
+        Bitmap freezedZomb = new Bitmap(@".\Images\FreezedZomb.png");
+        Bitmap fieldImage = new Bitmap(@".\Images\Level2Field.png");
+        Bitmap bulletImage = new Bitmap(@".\Images\Bullet.png");
+        Bitmap learnImage = new Bitmap(@".\Images\Learn.png");
+        Bitmap toWinImage = new Bitmap(@".\Images\ToWin.png");
+        Bitmap zaBabkuIPomidoryImage = new Bitmap(@".\Images\ZaBabku.png");
 
         public Level2()
         {
@@ -35,9 +48,6 @@ namespace GrannysGardenGame.View
 
             //InitializeComponent();
 
-            var learnImage = new Bitmap(@".\Images\Learn.png");
-            var toWinImage = new Bitmap(@".\Images\ToWin.png");
-            var zaBabkuIPomidoryImage = new Bitmap(@".\Images\ZaBabku.png");
             var learnBox = new PictureBox
             {
                 Width = 316,
@@ -73,10 +83,7 @@ namespace GrannysGardenGame.View
         {
             base.OnPaint(e);
 
-            var houseImage = new Bitmap(@".\Images\House.png");
-            var grannysImage = new Bitmap(@".\Images\Granny.png");
-            var healthText = new Bitmap(@".\Images\HealthText.png");
-            var scoreText = new Bitmap(@".\Images\ScoreTextpng.png");
+            
             var h = game.player.Health;
             var s = game.player.Scores;
             var health = new Rectangle(new Point(42 + healthText.Width, 14), new Size((675 * h) / 100, 12));
@@ -90,18 +97,8 @@ namespace GrannysGardenGame.View
             e.Graphics.DrawImage(scoreText, 12, 41);
             e.Graphics.DrawImage(grannysImage, 50, 60, 64, 79);
             e.Graphics.DrawImage(houseImage, 210, 0, 150, 140);
-
-
-            var playerImage = new Bitmap(@".\Images\Player.png");
-            var zombImage = new Bitmap(@".\Images\Zomb.png");
-            var deadZomb = new Bitmap(@".\Images\DeadWeed.png");
-            var freezedZomb = new Bitmap(@".\Images\FreezedZomb.png");
-            var fieldImage = new Bitmap(@".\Images\Level2Field.png");
-
             e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
             e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth + 4, game.player.CurrentPos.Y * cellHeight + 104, 70, 97);
-            //e.Graphics.FillRectangle(Brushes.Red, 
-            //game.field.winCell.X * cellWidth, game.field.winCell.Y * cellHeight + 134, cellWidth, cellHeight);
 
             foreach (var weed in game.field.weeds)
             {
@@ -112,8 +109,6 @@ namespace GrannysGardenGame.View
                 if (weed.WeedState == WeedStates.Freezed)
                     e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth + 6, weed.Y * cellHeight + 124, zombImage.Width * 1.5f, zombImage.Height * 1.5f);
             }
-
-            var bulletImage = new Bitmap(@".\Images\Bullet.png");
 
             foreach (var bullet in bullets)
             {
@@ -262,8 +257,8 @@ namespace GrannysGardenGame.View
         {
             foreach (var bullet in bullets)
             {
-                bullet.MoveBullet();
                 bullet.DeadInConflict(game.field, game.player);
+                bullet.MoveBullet();
             }
         }
 
@@ -306,7 +301,7 @@ namespace GrannysGardenGame.View
 
         string[] level2 = new[]
             {
-                "WW@WW",
+                "@W#WW",
                 "##W#W",
                 "#W###",
                 "W##W#",

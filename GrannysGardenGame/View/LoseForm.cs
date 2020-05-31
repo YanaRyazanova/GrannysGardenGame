@@ -76,7 +76,7 @@ namespace GrannysGardenGame.View
             exitGameButton.Click += (sender, args) =>
             {
                 this.Hide();
-                var myMenu = new MyMenu();
+                var myMenu = new MyMenu(game.level);
                 myMenu.ShowDialog();
                 this.Close();
             };

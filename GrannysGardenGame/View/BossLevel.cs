@@ -264,7 +264,7 @@ namespace GrannysGardenGame.View
         {
             if (game.GameState == GameStates.Win)
             {
-                game.level++;
+                game.level = 1;
                 ChangeLevel(game);
                 timer.Stop();
                 this.Hide();

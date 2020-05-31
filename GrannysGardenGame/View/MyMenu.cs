@@ -16,9 +16,11 @@ namespace GrannysGardenGame.View
         PictureBox textBox;
         Button newGameButton;
         Button continueGameButton;
+        public int level;
    
-        public MyMenu()
+        public MyMenu(int lev)
         {
+            level = lev;
             InitializeComponent();
         }
 
@@ -79,8 +81,21 @@ namespace GrannysGardenGame.View
             continueGameButton.Click += (sender, args) =>
             {
                 this.Hide();
-                var gameForm = new GameForm();
-                gameForm.ShowDialog();
+                if (level == 1)
+                {
+                    var gameForm = new GameForm();
+                    gameForm.ShowDialog();
+                }   
+                else if(level == 2)
+                {
+                    var gameForm = new Level2();
+                    gameForm.ShowDialog();
+                }
+                else 
+                {
+                    var gameForm = new BossLevel();
+                    gameForm.ShowDialog();
+                }
                 this.Show();
             };
 

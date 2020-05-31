@@ -37,7 +37,8 @@ namespace GrannysGardenGame.Domain
 
         public void GameEnd()
         {
-            if(player.CurrentPos.X == field.winCell.X && player.CurrentPos.Y == field.winCell.Y) //Возможно потребуется переопределить метод
+            if(player.CurrentPos.X == field.winCell.X && player.CurrentPos.Y == field.winCell.Y 
+                && field.weeds.Count == 0) //Возможно потребуется переопределить метод
             {
                 GameState = GameStates.Win;
             }
@@ -79,7 +80,7 @@ namespace GrannysGardenGame.Domain
             foreach (var weed in incidentWeeds)
             {
                 var i = FindWeed(weed);
-                if (i != -1)
+                if (i != -1) 
                     field.weeds[i].WeedState = WeedStates.Freezed;
             }
             

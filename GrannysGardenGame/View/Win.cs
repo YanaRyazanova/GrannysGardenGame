@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,11 +10,13 @@ using System.Windows.Forms;
 
 namespace GrannysGardenGame.View
 {
-    public partial class WinnerForm : Form
+    public partial class Win : Form
     {
         PictureBox textBox;
+        Button continueGameButton;
         Button exitGameButton;
-        public WinnerForm()
+
+        public Win()
         {
             InitializeComponent();
         }
@@ -39,7 +41,7 @@ namespace GrannysGardenGame.View
                 Width = 200,
                 Height = 65,
                 Image = new Bitmap(@".\Images\ExitGame.png"),
-                Location = new Point(100, 330)
+                Location = new Point(100, continueGameButton.Location.Y + continueGameButton.Height + 10),
             };
 
             exitGameButton.BringToFront();
@@ -52,9 +54,9 @@ namespace GrannysGardenGame.View
                 this.Close();
             };
 
+            Controls.Add(continueGameButton);
             Controls.Add(exitGameButton);
             Controls.Add(textBox);
-            
         }
     }
 }

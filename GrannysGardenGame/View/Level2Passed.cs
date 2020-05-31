@@ -48,7 +48,7 @@ namespace GrannysGardenGame.View
             continueGameButton.Click += (sender, args) =>
             {
                 this.Hide();
-                var gameForm = new Level2();
+                var gameForm = new BossLevel();
                 gameForm.ShowDialog();
                 this.Close();
             };
@@ -66,7 +66,7 @@ namespace GrannysGardenGame.View
             exitGameButton.Click += (sender, args) =>
             {
                 this.Hide();
-                var myMenu = new MyMenu();
+                var myMenu = new MyMenu(3);
                 myMenu.ShowDialog();
                 this.Close();
             };

@@ -176,7 +176,7 @@ namespace GrannysGardenGame.View
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            timer.Interval = 1;
+            timer.Interval = 50;
             timer.Tick += TimerTick;
             if (!timer.Enabled)
             {
@@ -340,7 +340,7 @@ namespace GrannysGardenGame.View
                 "@W##W",
                 "W###W",
                 "#W###",
-                "##W#W",
+                "##W##",
                 "W##W#",
                 "####P"
             };

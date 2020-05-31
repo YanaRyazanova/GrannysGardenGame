@@ -17,7 +17,7 @@ namespace GrannysGardenGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var form = new MyMenu(1);
+            var form = new  BossLevel(); //MyMenu(1);
             Application.Run(form);
         }
     }

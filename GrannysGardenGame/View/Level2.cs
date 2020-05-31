@@ -295,9 +295,9 @@ namespace GrannysGardenGame.View
             {
                 "@W##W",
                 "W##W#",
-                "#WW#W",
+                "##W##",
                 "#W#W#",
-                "W#W#W",
+                "W###W",
                 "####P"
             };
     }

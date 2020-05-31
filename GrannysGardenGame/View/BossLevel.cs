@@ -86,7 +86,7 @@ namespace GrannysGardenGame.View
             e.Graphics.DrawImage(grannysImage, 50, 60, 64, 79);
             e.Graphics.DrawImage(houseImage, 210, 0, 150, 140);
             e.Graphics.DrawImage(fieldImage, 0, 134, game.field.Width * cellWidth, game.field.Height * cellHeight);
-            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134f, 70, 93);
+            
 
             foreach (var weed in game.field.weeds)
             {
@@ -97,20 +97,17 @@ namespace GrannysGardenGame.View
                 {
                     weed.X = item.X;
                     weed.Y = item.Y;
-                    if (weed.WeedState == WeedStates.Alive)
-                        e.Graphics.DrawImage(zombImage, weed.X * cellWidth + 5, weed.Y * cellHeight + 134);
-                    if (weed.WeedState == WeedStates.Dead) 
-                    {
-                        e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 134);
-                    }
+
+                        if (weed.WeedState == WeedStates.Alive) 
+                            e.Graphics.DrawImage(zombImage, weed.X * cellWidth + 5, weed.Y * cellHeight + 134);
+                        
+                        if (weed.WeedState == WeedStates.Dead) 
+                            e.Graphics.DrawImage(deadZomb, weed.X * cellWidth, weed.Y * cellHeight + 134);
                     
-                    if (weed.WeedState == WeedStates.Freezed) 
-                    {
-                        e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth + 5, weed.Y * cellHeight + 134, 
-                        zombImage.Width * 1.5f, zombImage.Height * 1.5f);
-                    }
+                        if (weed.WeedState == WeedStates.Freezed) 
+                            e.Graphics.DrawImage(freezedZomb, weed.X * cellWidth + 5, weed.Y * cellHeight + 134, 
+                            zombImage.Width * 1.5f, zombImage.Height * 1.5f);
                 }
-               
             }
 
             foreach(var bullet in bullets) 
@@ -118,6 +115,7 @@ namespace GrannysGardenGame.View
                 if (bullet.state == BulletState.Exist)
                     e.Graphics.DrawImage(bulletImage, bullet.X * cellWidth + 21, bullet.Y * cellHeight - 40 + 114, 30, 30);
             }
+            e.Graphics.DrawImage(playerImage, game.player.CurrentPos.X * cellWidth, game.player.CurrentPos.Y * cellHeight + 134f, 70, 93);
         }
 
         public List<FieldCell> GetPath(SinglyLinkedList<FieldCell> k)
@@ -257,7 +255,7 @@ namespace GrannysGardenGame.View
                 ChangeLevel(game);
                 timer.Stop();
                 this.Hide();
-                var winWindow = new Level1Passed();
+                var winWindow = new WinnerForm();
                 winWindow.ShowDialog();
                 this.Close();
             }
@@ -293,7 +291,7 @@ namespace GrannysGardenGame.View
                 if (game.field.weeds[i].WeedState == WeedStates.Dead) 
                 {
                     game.field.weeds.RemoveAt(i);
-                    game.field.weeds.Add(new Weed(0, 0));
+                    //game.field.weeds.Add(new Weed(0, 0));
                 }
                     
             }
@@ -318,6 +316,7 @@ namespace GrannysGardenGame.View
             var field = Field.FromLines(textField);
             var player = new Player(field.initialCell);
             game = new Game(player, field);
+            game.level = 3;
             return game;
         }
 
@@ -337,7 +336,7 @@ namespace GrannysGardenGame.View
         }
         string[] level1 = new[]
             {
-                "@#W#W",
+                "@#W##",
                 "W###W",
                 "#####",
                 "##W##",
